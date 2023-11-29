@@ -1,10 +1,15 @@
 import React from 'react';
-import {Text, View} from "react-native";
+import {ScrollView, View} from "react-native";
+import PlaceCard from "../components/PlaceCard";
 
 const ExploreScreen = () => {
+
     return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text>Explore screen!</Text>
+        <View>
+            <ScrollView>
+                <PlaceCard/>
+                <PlaceCard/>
+            </ScrollView>
         </View>
     );
 };
