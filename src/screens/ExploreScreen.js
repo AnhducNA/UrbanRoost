@@ -13,7 +13,7 @@ const ExploreScreen = () => {
     } = useGetPlacesQuery();
     return (
         <View>
-            <ScrollView>
+            <ScrollView className="px-4 mt-5">
                 {(places)?.map((placeItem, index) => {
                     console.log(placeItem)
                     return (
