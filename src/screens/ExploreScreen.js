@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ScrollView, View} from "react-native";
 import PlaceCard from "../components/PlaceCard";
 import {useGetPlacesQuery} from "../services/placesApi";
+import PlaceCategory from "../components/PlaceCategory";
+import categoryList from "../data/categoryData";
 
 const ExploreScreen = () => {
     const {
@@ -11,11 +13,16 @@ const ExploreScreen = () => {
         isError,
         error,
     } = useGetPlacesQuery();
+    const [categoryIndex, setCategoryIndex] = useState(1);
     return (
         <View>
+            <PlaceCategory
+                categoryList={categoryList}
+                categoryIndex={categoryIndex}
+                setCategoryIndex={setCategoryIndex}
+            />
             <ScrollView className="px-4 mt-5">
                 {(places)?.map((placeItem, index) => {
-                    console.log(placeItem)
                     return (
                         <PlaceCard
                             key={index}

@@ -2,6 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faHeart, faStar} from "@fortawesome/free-solid-svg-icons";
+import {useNavigation} from "@react-navigation/native";
 
 function PlaceCard(
     {
@@ -12,8 +13,11 @@ function PlaceCard(
         price = 0
     }
 ) {
+    const navigation = useNavigation();
     return (
-        <TouchableOpacity className="py-2 relative">
+        <TouchableOpacity className="py-2 relative" onPress={(event) => {
+            navigation.navigate('PlaceDetail');
+        }}>
             <Image
                 source={{uri: image}} alt={title}
                 className="w-full h-64 rounded-2xl"
