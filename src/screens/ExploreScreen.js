@@ -4,6 +4,7 @@ import PlaceCard from "../components/PlaceCard";
 import {useGetPlacesQuery} from "../services/placesApi";
 import PlaceCategory from "../components/PlaceCategory";
 import categoryList from "../data/categoryData";
+import SearchExplore from "../components/SearchExplore";
 
 const ExploreScreen = () => {
     const {
@@ -15,7 +16,8 @@ const ExploreScreen = () => {
     } = useGetPlacesQuery();
     const [categoryIndex, setCategoryIndex] = useState(1);
     return (
-        <View>
+        <View className={"mt-7"}>
+            <SearchExplore/>
             <PlaceCategory
                 categoryList={categoryList}
                 categoryIndex={categoryIndex}
