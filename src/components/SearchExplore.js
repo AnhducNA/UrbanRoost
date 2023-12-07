@@ -8,7 +8,7 @@ const SearchExplore = () => {
     const navigation = useNavigation();
     return (
         <View
-            className="flex-row justify-between px-3 py-2 mx-3 border-2 rounded-full border-gray-200 shadow items-center">
+            className="flex-row justify-between px-3 py-2 mx-3 border-2 rounded-full border-gray-200 items-center">
             <FontAwesomeIcon icon={faSearch} size={20} color='black'/>
             <TouchableOpacity
                 onPress={() => {

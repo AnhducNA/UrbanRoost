@@ -4,12 +4,12 @@
     "slug": "UrbanRoost",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo_vietnam.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/logo_kma.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "assetBundlePatterns": [
       "**/*"

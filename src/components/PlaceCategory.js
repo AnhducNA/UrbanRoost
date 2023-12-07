@@ -18,7 +18,7 @@ const PlaceCategory = ({
                     <TouchableOpacity
                         key={categoryItem.id}
                         className={`px-2 py-3 items-center ${
-                            categoryIndex === categoryItem.id ? "border-b pb-5" : ""
+                            categoryIndex === categoryItem.id ? "border-b pt-0 mb-1" : ""
                         }`}
                         onPress={()=> {setCategoryIndex(categoryItem.id)}}
                     >
