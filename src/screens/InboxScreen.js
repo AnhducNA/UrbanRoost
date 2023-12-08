@@ -1,11 +1,15 @@
 import React from 'react';
-import {Text, View} from "react-native";
+import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
+import InboxTab from "../components/InboxTab";
+import NotificationTab from "../components/NotificationTab";
 
+const Tab = createMaterialTopTabNavigator();
 const InboxScreen = () => {
     return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text>Inbox screen!</Text>
-        </View>
+        <Tab.Navigator className={"mt-5"}>
+            <Tab.Screen name="Message" component={InboxTab}/>
+            <Tab.Screen name="Notification" component={NotificationTab}/>
+        </Tab.Navigator>
     );
 };
 

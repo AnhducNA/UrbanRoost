@@ -4,7 +4,7 @@
     "slug": "UrbanRoost",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo_vietnam.png",
+    "icon": "./assets/logo_vietnam.jpg",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/logo_kma.png",
