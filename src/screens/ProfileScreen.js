@@ -1,5 +1,5 @@
-import React from 'react';
-import {Button, Image, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import React, {useState} from 'react';
+import {Button, Image, ScrollView, Switch, Text, TouchableOpacity, View} from "react-native";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {
     faBell, faBookOpen, faBriefcase,
@@ -10,90 +10,13 @@ import {
     faRightToBracket,
     faUser
 } from "@fortawesome/free-solid-svg-icons";
+import SwitchDarkMode from "../components/SwitchDarkMode";
+import accountSettingsListData from "../data/accountSettingListData";
 
 const ProfileScreen = () => {
-    const accountSettingsList = [
-        {
-            header: "Account Settings",
-            menuItems: [
-                {
-                    title: "Personal Information",
-                    icon: faHouse,
-                    link: "/",
-                },
-                {
-                    title: "Login & Security",
-                    icon: faRightToBracket,
-                    link: "/",
-                },
-                {
-                    title: "Payments and payouts",
-                    icon: faMoneyBill,
-                    link: "/",
-                },
-                {
-                    title: "Translation",
-                    icon: faLanguage,
-                    link: "",
-                },
-                {
-                    title: "Notification",
-                    icon: faBell,
-                    link: "",
-                },
-                {
-                    title: "DarkMode",
-                    icon: faMoon,
-                    link: "",
-                },
-                {
-                    title: "Privacy and Sharing",
-                    icon: faLock,
-                    link: "",
-                },
-                {
-                    title: "Travel for Work",
-                    icon: faBriefcase,
-                    link: "",
-                },
-            ],
-        },
-        {
-            header: "Hosting",
-            menuItems: [
-                {
-                    title: "List your Space",
-                    icon: faHouse,
-                    link: "/",
-                },
-                {
-                    title: "Learn about hosting",
-                    icon: faHouse,
-                    link: "/",
-                },
-                {
-                    title: "Host an Experience",
-                    icon: faHouse,
-                    link: "/",
-                },
-            ],
-        },
-        {
-            header: "Legal",
-            menuItems: [
-                {
-                    title: "Terms of Service",
-                    icon: faBookOpen,
-                    link: "/",
-                },
-                {
-                    title: "Privacy Policy",
-                    icon: faBookOpen,
-                    link: "/",
-                },
-            ],
-        },
-    ];
+    const accountSettingsList = accountSettingsListData;
+    const [isSystemTheme, setIsSystemTheme] = useState(true);
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={true}
@@ -129,6 +52,9 @@ const ProfileScreen = () => {
                 </View>
             </View>
 
+            {/*Login*/}
+            {/*
+
             <Text className="text-lg text-gray-500">
                 Log in start planning your next up
             </Text>
@@ -142,17 +68,31 @@ const ProfileScreen = () => {
                 />
             </View>
             <Text>Don't have account ? Sign Up</Text>
+            */}
+
+
             {/* Settings */}
-            {/*
             <View className="py-10 space-y-3">
                 {accountSettingsList?.map((accountItem) => {
                     return (
                         <View key={accountItem.header}>
                             <Text className="font-bold text-xl text-gray-500 ">{accountItem.header}</Text>
+                            <TouchableOpacity key={0}
+                                              className="flex-row justify-between mt-3 items-center border-b border-gray-300 pb-3">
+                                <View className="flex-row items-center space-x-2">
+                                    <FontAwesomeIcon icon={faMoon} size={25} color="gray"/>
+                                    <Text className="text-xl text-gray-500">
+                                        DarkMode
+                                    </Text>
+                                </View>
+                                <View>
+                                    <SwitchDarkMode/>
+                                </View>
+                            </TouchableOpacity>
                             {accountItem.menuItems.map((menuItem) => {
                                 return (
                                     <TouchableOpacity key={menuItem.title}
-                                          className="flex-row justify-between mt-3 items-center border-b border-gray-300 pb-3">
+                                                      className="flex-row justify-between mt-3 items-center border-b border-gray-300 pb-3">
                                         <View className="flex-row items-center space-x-2">
                                             <FontAwesomeIcon icon={menuItem.icon} size={25} color="gray"/>
                                             <Text className="text-xl text-gray-500">
@@ -169,7 +109,6 @@ const ProfileScreen = () => {
                     );
                 })}
             </View>
-*/}
         </ScrollView>
 
     );

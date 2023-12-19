@@ -1,9 +1,13 @@
-import React from 'react';
-import {Text, View} from "react-native";
+import React, {useContext} from 'react';
+import {StyleSheet, Text, useColorScheme, View} from "react-native";
+import {colors} from "../config/theme";
+import {ThemeContext} from "../context/ThemeContext";
 
 const RoommateScreen = () => {
+    const { theme } = useContext(ThemeContext);
+    const activeColors = colors[theme.mode];
     return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: activeColors.primary}}>
             <Text>Roommate screen!</Text>
         </View>
     );
