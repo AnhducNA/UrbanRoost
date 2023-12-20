@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, View} from "react-native";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
@@ -14,21 +14,27 @@ import RoommateScreen from "./RoommateScreen";
 import WishlistsScreen from "./WishlistsScreen";
 import InboxScreen from "./InboxScreen";
 import ProfileScreen from "./ProfileScreen";
+import {ThemeContext} from "../context/ThemeContext";
+import {colors} from "../config/theme";
 
 const Tab = createBottomTabNavigator();
 const HomeScreen = () => {
+    const {theme} = useContext(ThemeContext);
+    const activeColors = colors[theme.mode];
     return (
         <Tab.Navigator
             screenOptions={({route}) => ({
-                tabBarActiveTintColor: '#0b6839',
+                tabBarStyle: {backgroundColor: activeColors.background, minHeight: 55, paddingTop:5},
+                tabBarActiveTintColor: activeColors.primary,
                 tabBarInactiveTintColor: 'gray',
                 headerShown: false,
+                tabBarLabelStyle: {fontSize:13},
                 tabBarIcon: ({focused, color, size}) => {
                     let colorName = "gray";
                     let opacity = 0.9;
-                    let iconSize = 25;
+                    let iconSize = 22
                     if (focused) {
-                        colorName = "#0b6839";
+                        colorName = activeColors.primary;
                     }
                     if (route.name === "Explore") {
                         return (

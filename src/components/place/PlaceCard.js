@@ -22,9 +22,14 @@ function PlaceCard(
                 source={{uri: image}} alt={title}
                 className="w-full h-64 rounded-2xl"
             />
-            <View className="absolute top-5 right-4 cursor-pointer">
+            <TouchableOpacity
+                className="p-3 absolute top-5 right-4"
+                onPress={() => {
+                    console.log(465)
+                }}
+            >
                 <FontAwesomeIcon icon={faHeart} size={25} color={'gray'}/>
-            </View>
+            </TouchableOpacity>
             <View className="flex-col justify-between">
                 <View className="flex-row items-center justify-between">
                     <Text className="font-medium">{location}</Text>

@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {ScrollView, View} from "react-native";
-import PlaceCard from "../components/PlaceCard";
+import PlaceCard from "../components/place/PlaceCard";
 import {useGetPlacesQuery} from "../services/placesApi";
-import PlaceCategory from "../components/PlaceCategory";
+import PlaceCategory from "../components/place/PlaceCategory";
 import categoryList from "../data/categoryData";
 import SearchExplore from "../components/SearchExplore";
+import {ThemeContext} from "../context/ThemeContext";
+import {colors} from "../config/theme";
 
 const ExploreScreen = () => {
     const {
@@ -15,8 +17,10 @@ const ExploreScreen = () => {
         error,
     } = useGetPlacesQuery();
     const [categoryIndex, setCategoryIndex] = useState(1);
+    const {theme} = useContext(ThemeContext);
+    const activeColors = colors[theme.mode];
     return (
-        <View className={"mt-7"}>
+        <View className={"mt-7"} style={{backgroundColor: activeColors.background}}>
             <SearchExplore/>
             <PlaceCategory
                 categoryList={categoryList}

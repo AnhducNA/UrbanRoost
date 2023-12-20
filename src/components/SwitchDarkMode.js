@@ -27,10 +27,10 @@ const SwitchDarkMode = () => {
         <Switch
             value={isDarkTheme}
             onValueChange={toggleTheme}
-            thumbColor={isDarkTheme ? "#fff" : activeColors.tertiary}
+            thumbColor={isDarkTheme ? activeColors.switch_on : activeColors.tertiary}
             trackColor={{
-                false: 'gray',
-                true: activeColors.accent
+                false: activeColors.bg_switch,
+                true: activeColors.bg_switch
             }}
         />
     );

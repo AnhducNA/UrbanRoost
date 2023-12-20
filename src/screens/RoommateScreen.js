@@ -4,10 +4,11 @@ import {colors} from "../config/theme";
 import {ThemeContext} from "../context/ThemeContext";
 
 const RoommateScreen = () => {
-    const { theme } = useContext(ThemeContext);
+    const {theme} = useContext(ThemeContext);
     const activeColors = colors[theme.mode];
     return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: activeColors.primary}}>
+        <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: activeColors.background}}>
             <Text>Roommate screen!</Text>
         </View>
     );

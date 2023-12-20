@@ -1,7 +1,7 @@
 import React from 'react';
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
-import InboxTab from "../components/InboxTab";
-import NotificationTab from "../components/NotificationTab";
+import InboxTab from "../components/inbox/InboxTab";
+import NotificationTab from "../components/inbox/NotificationTab";
 
 const Tab = createMaterialTopTabNavigator();
 const InboxScreen = () => {
