@@ -3,6 +3,8 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faHeart, faStar} from "@fortawesome/free-solid-svg-icons";
 import {useNavigation} from "@react-navigation/native";
+import {useDispatch} from "react-redux";
+import {addWishlistPlace} from "../../features/wishlistSlice";
 
 function PlaceCard(
     {
@@ -14,6 +16,7 @@ function PlaceCard(
     }
 ) {
     const navigation = useNavigation();
+    const dispatch = useDispatch();
     return (
         <TouchableOpacity className="py-2 relative" onPress={(event) => {
             navigation.navigate('PlaceDetail');
@@ -25,7 +28,7 @@ function PlaceCard(
             <TouchableOpacity
                 className="p-3 absolute top-5 right-4"
                 onPress={() => {
-                    console.log(465)
+                    dispatch(addWishlistPlace({title, star, image, price}))
                 }}
             >
                 <FontAwesomeIcon icon={faHeart} size={25} color={'gray'}/>

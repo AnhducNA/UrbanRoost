@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {ScrollView, View} from "react-native";
 import PlaceCard from "../components/place/PlaceCard";
-import {useGetPlacesQuery} from "../services/placesApi";
+import {useGetPlacesQuery} from "../features/placesApi";
 import PlaceCategory from "../components/place/PlaceCategory";
 import categoryList from "../data/categoryData";
 import SearchExplore from "../components/SearchExplore";
