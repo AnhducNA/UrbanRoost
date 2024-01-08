@@ -1,16 +1,14 @@
-'use strict'
-
-const util = require('util')
-const mysql = require('mysql')
-const db = require('./../db')
+const Place = require('../models/place.model');
+const db = require('../database');
 
 module.exports = {
-    get: (req, res) => {
-        let sql = 'SELECT * FROM place';
-        db.query(sql, (err, response) => {
-            if (err) console.log(err)
-            res.json(response)
-        })
+    getPlaces: async (req, res, next) => {
+        try {
+            const places = await Place.getPlaces();
+            res.json(places);
+        } catch (err) {
+            res.status(500).json({message: err.message});
+        }
     },
     detail: (req, res) => {
         console.log(req)
