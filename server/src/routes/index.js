@@ -1,5 +1,5 @@
 const placeRoute = require('./place.route.js');
 const initRoute = app => {
-    app.use('/places', placeRoute);
+    app.use('/place', placeRoute);
 }
 module.exports = initRoute;
