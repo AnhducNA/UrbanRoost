@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {ScrollView, View} from "react-native";
 import PlaceCard from "../components/place/PlaceCard";
 import {useGetPlacesQuery} from "../features/placesApi";
@@ -7,18 +7,28 @@ import categoryList from "../data/categoryData";
 import SearchExplore from "../components/SearchExplore";
 import {ThemeContext} from "../context/ThemeContext";
 import {colors} from "../config/theme";
+import request from "../api/request";
 
 const ExploreScreen = () => {
-    const {
-        data: places,
-        isLoading,
-        isSuccess,
-        isError,
-        error,
-    } = useGetPlacesQuery();
+
     const [categoryIndex, setCategoryIndex] = useState(1);
     const {theme} = useContext(ThemeContext);
     const activeColors = colors[theme.mode];
+    const [places, setPlaces] = useState([]);
+
+    const getPlaces = async () => {
+        try {
+            await request.getPlaces().then((response) => {
+                setPlaces(response.data);
+            });
+        } catch (error) {
+            console.log(error.message)
+        }
+    };
+    useEffect(() => {
+        getPlaces();
+    }, []);
+
     return (
         <View className={"mt-7"} style={{backgroundColor: activeColors.background}}>
             <SearchExplore/>
