@@ -5,10 +5,9 @@ import {
     faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import {useNavigation} from "@react-navigation/native";
-import SearchScreen from "../screens/SearchScreen";
 import {SearchBar, Button} from '@rneui/themed';
-import {ThemeContext} from "../context/ThemeContext";
-import {colors} from "../config/theme";
+import {ThemeContext} from "../../context/ThemeContext";
+import {colors} from "../../config/theme";
 
 const SearchComponent = () => {
     // get Theme
@@ -21,10 +20,10 @@ const SearchComponent = () => {
                 Find a room anywhere
             </Text>
             <SearchBar
-                placeholder={"Enter an address"}
+                placeholder={"Enter an address or city"}
                 platform="android"
                 searchIcon={<FontAwesomeIcon icon={faLocationDot} size={20} color={activeColors.primary}/>}
-                containerStyle={{borderRadius: 5}}
+                containerStyle={{borderRadius: 5, backgroundColor: '#F7F7F7'}}
                 inputStyle={{fontSize: 16}}
             />
 
@@ -32,13 +31,13 @@ const SearchComponent = () => {
                     color={activeColors.primary}
                     buttonStyle={{marginTop: 9}}
                     onPress={() => {
-                        navigation.navigate('Search')
+                        navigation.navigate('AdvancedSearch')
                     }}
             />
 
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate('Filter')
+                    navigation.navigate('AdvancedSearch')
                 }}
             >
                 <Text style={[styles.search_advanced, {color: activeColors.text}]}>Advanced Search</Text>

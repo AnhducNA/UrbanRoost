@@ -8,7 +8,6 @@ import {addWishlistPlace} from "../../features/wishlistSlice";
 import {Button, Card} from "@rneui/themed";
 import {ThemeContext} from "../../context/ThemeContext";
 import {colors} from "../../config/theme";
-import {flex} from "nativewind/dist/postcss/to-react-native/properties/flex";
 
 function PlaceCard(
     {

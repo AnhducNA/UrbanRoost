@@ -7,7 +7,7 @@
     "icon": "./assets/logo_vietnam.jpg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/logo_kma.png",
+      "image": "./assets/leanhduc.jpg",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },

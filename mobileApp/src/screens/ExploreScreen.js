@@ -3,7 +3,7 @@ import {SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
 import PlaceCard from "../components/place/PlaceCard";
 import PlaceCategory from "../components/place/PlaceCategory";
 import categoryList from "../data/categoryData";
-import SearchComponent from "../components/SearchComponent";
+import SearchComponent from "../components/search/SearchComponent";
 import {ThemeContext} from "../context/ThemeContext";
 import {colors} from "../config/theme";
 import request from "../api/request";
@@ -13,7 +13,6 @@ const ExploreScreen = () => {
     // get Theme
     const {theme} = useContext(ThemeContext);
     const activeColors = colors[theme.mode];
-
     const [categoryIndex, setCategoryIndex] = useState(1);
     const [places, setPlaces] = useState([]);
     const getPlaces = async () => {
@@ -22,7 +21,7 @@ const ExploreScreen = () => {
                 setPlaces(response.data);
             });
         } catch (error) {
-            console.log(error.message)
+            console.log('Error getPlaces: ' + error.message);
         }
     };
     useEffect(() => {
@@ -46,7 +45,6 @@ const ExploreScreen = () => {
                         Recently Added Room
                     </Card.Title>
                     {(places)?.map((placeItem, index) => {
-                        console.log(placeItem.state)
                         return (
                             <PlaceCard
                                 key={index}

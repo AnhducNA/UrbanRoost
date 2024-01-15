@@ -43,7 +43,7 @@ const ProfileScreen = () => {
                         <Text className="text-xl font-medium"
                               style={{color: activeColors.text}}
                         >
-                            Airbnb Your Place</Text>
+                            UrbanRoost Your Place</Text>
                         <Text className="text-sm w-40" style={{color: activeColors.text}}>
                             It's simple to get up and start earning
                         </Text>

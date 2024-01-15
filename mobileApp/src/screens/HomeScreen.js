@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {
     faHeart,
     faMagnifyingGlass,
-    faMessage,
+    faMessage, faSearchLocation,
     faUser,
     faUserGroup
 } from "@fortawesome/free-solid-svg-icons";
@@ -16,6 +16,7 @@ import InboxScreen from "./InboxScreen";
 import ProfileScreen from "./ProfileScreen";
 import {ThemeContext} from "../context/ThemeContext";
 import {colors} from "../config/theme";
+import AdvancedSearchScreen from "./AdvancedSearchScreen";
 
 const Tab = createBottomTabNavigator();
 const HomeScreen = () => {
@@ -39,6 +40,14 @@ const HomeScreen = () => {
                     if (route.name === "Explore") {
                         return (
                             <FontAwesomeIcon icon={faMagnifyingGlass}
+                                             color={colorName}
+                                             opacity={opacity}
+                                             size={iconSize}
+                            />
+                        )
+                    } else if (route.name === "Search") {
+                        return (
+                            <FontAwesomeIcon icon={faSearchLocation}
                                              color={colorName}
                                              opacity={opacity}
                                              size={iconSize}
@@ -81,6 +90,7 @@ const HomeScreen = () => {
             })}
         >
             <Tab.Screen name="Explore" component={ExploreScreen}/>
+            <Tab.Screen name="Search" component={AdvancedSearchScreen}/>
             <Tab.Screen name="Roommate" component={RoommateScreen}/>
             <Tab.Screen name="Wishlists" component={WishlistsScreen}/>
             <Tab.Screen name="Inbox" component={InboxScreen}/>
