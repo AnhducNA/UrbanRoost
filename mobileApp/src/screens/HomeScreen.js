@@ -1,102 +1,108 @@
-import React, {useContext} from 'react';
-import {Text, View} from "react-native";
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
-import {
-    faHeart,
-    faMagnifyingGlass,
-    faMessage, faSearchLocation,
-    faUser,
-    faUserGroup
-} from "@fortawesome/free-solid-svg-icons";
-import ExploreScreen from "./ExploreScreen";
-import RoommateScreen from "./RoommateScreen";
-import WishlistsScreen from "./WishlistsScreen";
-import InboxScreen from "./InboxScreen";
-import ProfileScreen from "./ProfileScreen";
+import React, {useContext, useEffect, useState} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import PlaceCard from "../components/place/PlaceCard";
+import PlaceCategory from "../components/place/PlaceCategory";
+import categoryList from "../data/categoryData";
+import SearchComponent from "../components/search/SearchComponent";
 import {ThemeContext} from "../context/ThemeContext";
 import {colors} from "../config/theme";
-import AdvancedSearchScreen from "./AdvancedSearchScreen";
+import request from "../api/request";
+import {useNavigation} from "@react-navigation/native";
 
-const Tab = createBottomTabNavigator();
 const HomeScreen = () => {
+    // get Theme
     const {theme} = useContext(ThemeContext);
     const activeColors = colors[theme.mode];
+    // navigation
+    const navigation = useNavigation();
+    const [categoryIndex, setCategoryIndex] = useState(1);
+    const [places, setPlaces] = useState([]);
+    const getPlaces = async () => {
+        try {
+            await request.getPlaces().then((response) => {
+                setPlaces(response.data);
+            });
+        } catch (error) {
+            console.log('Error getPlaces: ' + error.message);
+        }
+    };
+    useEffect(() => {
+        getPlaces();
+    }, []);
+
     return (
-        <Tab.Navigator
-            screenOptions={({route}) => ({
-                tabBarStyle: {backgroundColor: activeColors.background, minHeight: 55, paddingTop:5},
-                tabBarActiveTintColor: activeColors.primary,
-                tabBarInactiveTintColor: 'gray',
-                headerShown: false,
-                tabBarLabelStyle: {fontSize:13},
-                tabBarIcon: ({focused, color, size}) => {
-                    let colorName = "gray";
-                    let opacity = 0.9;
-                    let iconSize = 22
-                    if (focused) {
-                        colorName = activeColors.primary;
-                    }
-                    if (route.name === "Explore") {
+        <SafeAreaView style={[styles.container, {backgroundColor: activeColors.background}]}>
+            <TouchableOpacity style={[styles.container_header, {backgroundColor: activeColors.primary}]}
+                              onPress={() => {
+                                  navigation.navigate('Home');
+                              }}
+            >
+                <Text style={[styles.heading1, {color: activeColors.heading1}]}>UrbanRoost</Text>
+            </TouchableOpacity>
+            <ScrollView style={styles.container_body}>
+                <SearchComponent/>
+                <PlaceCategory
+                    categoryList={categoryList}
+                    categoryIndex={categoryIndex}
+                    setCategoryIndex={setCategoryIndex}
+                />
+                <View style={{paddingTop: 20, backgroundColor: activeColors.background, borderRadius: 4}}>
+                    <Text style={{fontSize: 20, paddingLeft: 15}}>
+                        Recently Added Room
+                    </Text>
+                    {(places)?.map((placeItem, index) => {
                         return (
-                            <FontAwesomeIcon icon={faMagnifyingGlass}
-                                             color={colorName}
-                                             opacity={opacity}
-                                             size={iconSize}
+                            <PlaceCard
+                                key={index}
+                                placeId = {placeItem.id}
+                                title={placeItem.title}
+                                description={placeItem.description}
+                                image={placeItem.img}
+                                location={placeItem.location}
+                                star={placeItem.star}
+                                type_place={placeItem.type_name}
+                                price={placeItem.price}
+                                latitude={placeItem.lat}
+                                longitude={placeItem.long}
+                                state={placeItem.state}
                             />
                         )
-                    } else if (route.name === "Search") {
-                        return (
-                            <FontAwesomeIcon icon={faSearchLocation}
-                                             color={colorName}
-                                             opacity={opacity}
-                                             size={iconSize}
-                            />
-                        )
-                    } else if (route.name === "Roommate") {
-                        return (
-                            <FontAwesomeIcon icon={faUserGroup}
-                                             color={colorName}
-                                             opacity={opacity}
-                                             size={iconSize}
-                            />
-                        )
-                    } else if (route.name === "Wishlists") {
-                        return (
-                            <FontAwesomeIcon icon={faHeart}
-                                             color={colorName}
-                                             opacity={opacity}
-                                             size={iconSize}
-                            />
-                        )
-                    } else if (route.name === "Inbox") {
-                        return (
-                            <FontAwesomeIcon icon={faMessage}
-                                             color={colorName}
-                                             opacity={opacity}
-                                             size={iconSize}
-                            />
-                        )
-                    } else if (route.name === "Profile") {
-                        return (
-                            <FontAwesomeIcon icon={faUser}
-                                             color={colorName}
-                                             opacity={opacity}
-                                             size={iconSize}
-                            />
-                        )
-                    }
-                },
-            })}
-        >
-            <Tab.Screen name="Explore" component={ExploreScreen}/>
-            <Tab.Screen name="Search" component={AdvancedSearchScreen}/>
-            <Tab.Screen name="Roommate" component={RoommateScreen}/>
-            <Tab.Screen name="Wishlists" component={WishlistsScreen}/>
-            <Tab.Screen name="Inbox" component={InboxScreen}/>
-            <Tab.Screen name="Profile" component={ProfileScreen}/>
-        </Tab.Navigator>
+                    })}
+                </View>
+            </ScrollView>
+        </SafeAreaView>
     );
 };
+// define styles
+const styles = StyleSheet.create({
+    container: {
+        height: '100%',
+        position: "relative",
+    },
+    container_header: {
+        width: '100%',
+        minHeight: 200,
+        position: "absolute",
+        top: 0,
+        borderBottomLeftRadius: 12,
+        borderBottomRightRadius: 12,
+        borderWidth: 1,
+        borderColor: '#000',
+        shadowRadius: 4,
+        shadowColor: 'rgba(0, 0, 0, 0.25)',
+    },
+    heading1: {
+        textAlign: 'center',
+        fontSize: 24,
+        fontStyle: 'normal',
+        marginTop: 40
+    },
+    container_body: {
+        marginTop: 90,
+        marginHorizontal: 15,
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12,
+    }
+});
 
 export default HomeScreen;

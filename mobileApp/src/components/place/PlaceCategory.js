@@ -1,21 +1,26 @@
 import React, {useContext} from 'react';
-import {Image, ScrollView, Text, TouchableOpacity} from "react-native";
+import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {ThemeContext} from "../../context/ThemeContext";
 import {colors} from "../../config/theme";
 
-const PlaceCategory = ({
-                           categoryList,
-                           categoryIndex = 1,
-                           setCategoryIndex
-                       }) => {
+const PlaceCategory = (
+    {
+        categoryList,
+        categoryIndex = 1,
+        setCategoryIndex
+    }
+) => {
+    // get color
     const {theme} = useContext(ThemeContext);
     const activeColors = colors[theme.mode];
     return (
         <ScrollView
-            contentContainerStyle={{paddingHorizontal: 5, paddingTop: 10}}
             horizontal={true}
             showsHorizontalScrollIndicator={true}
-            className="border-b pb-3 border-gray-300"
+            style={[styles.container, {
+                backgroundColor: activeColors.background,
+                borderColor: activeColors.primary,
+            }]}
         >
             {categoryList?.map((categoryItem, index) => {
                 return (
@@ -24,14 +29,16 @@ const PlaceCategory = ({
                         className={`px-2 py-3 items-center ${
                             categoryIndex === categoryItem.id ? "border-b pt-0 mb-1" : ""
                         }`}
-                        onPress={()=> {setCategoryIndex(categoryItem.id)}}
+                        onPress={() => {
+                            setCategoryIndex(categoryItem.id)
+                        }}
                     >
-                        <Image source={{uri: categoryItem.icon}}
-                               className={`w-4 h-4 opacity-75${
-                                   categoryIndex === categoryItem.id ? "opacity-100" : ""
-                               }`}
-                               style={{backgroundColor: activeColors.text, resizeMode: "cover"}}
-                        />
+                        <Text
+                            className={`w-4 h-4 opacity-75 ${
+                                categoryIndex === categoryItem.id ? "opacity-100" : "opacity-20"
+                            }`}
+                            style={{color: activeColors.primary, }}
+                        >{categoryItem.icon}</Text>
                         <Text
                             className={
                                 categoryIndex === categoryItem.id
@@ -49,4 +56,13 @@ const PlaceCategory = ({
     );
 };
 
+const styles = StyleSheet.create({
+    container: {
+        paddingHorizontal: 5,
+        paddingTop: 10,
+        paddingBottom: 3,
+        borderRadius: 8,
+        borderBottomWidth: 1,
+    }
+})
 export default PlaceCategory;

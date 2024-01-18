@@ -4,13 +4,12 @@ import {ThemeContext} from "../context/ThemeContext";
 import {colors} from "../config/theme";
 import AdvancedSearchComponent from "../components/search/AdvancedSearchComponent";
 import {useNavigation} from "@react-navigation/native";
-import {Card} from "@rneui/themed";
 
 const AdvancedSearchScreen = () => {
-    // get Theme
+    // get Color
     const {theme} = useContext(ThemeContext);
     const activeColors = colors[theme.mode];
-    // router
+    // navigation
     const navigation = useNavigation();
     return (
         <SafeAreaView style={[styles.wrapper, {backgroundColor: activeColors.background}]}>
@@ -19,7 +18,7 @@ const AdvancedSearchScreen = () => {
                                   navigation.navigate('Home');
                               }}
             >
-                <Text style={[styles.heading1, {color: activeColors.heading1}]}>UrbanRoost</Text>
+                    <Text style={[styles.heading1, {color: activeColors.heading1}]}>UrbanRoost</Text>
             </TouchableOpacity>
             <ScrollView style={styles.container_body}>
                 <AdvancedSearchComponent/>

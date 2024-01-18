@@ -7,9 +7,9 @@
     "icon": "./assets/logo_vietnam.jpg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/leanhduc.jpg",
+      "image": "./assets/leanhduc.png",
       "resizeMode": "contain",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#7472E0"
     },
     "assetBundlePatterns": [
       "**/*"

@@ -1,21 +1,23 @@
 import React, {useContext} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
-import {faCircleDot, faDotCircle, faHeart, faLocationDot, faStar} from "@fortawesome/free-solid-svg-icons";
+import {faHeart, faLocationDot, faStar} from "@fortawesome/free-solid-svg-icons";
 import {useNavigation} from "@react-navigation/native";
 import {useDispatch} from "react-redux";
 import {addWishlistPlace} from "../../features/wishlistSlice";
-import {Button, Card} from "@rneui/themed";
 import {ThemeContext} from "../../context/ThemeContext";
 import {colors} from "../../config/theme";
 
 function PlaceCard(
     {
-        title = '',
-        star = 5,
+        placeId,
+        title,
+        description,
         image,
         location,
+        star,
         price,
+        type_place,
         latitude,
         longitude,
         state
@@ -29,16 +31,30 @@ function PlaceCard(
 
     const dispatch = useDispatch();
     return (
-        <TouchableOpacity style={[styles.wrapper, {backgroundColor: '#fff'}]}
-                          onPress={(event) => {
-                              navigation.navigate('PlaceDetail');
-                          }}
+        <TouchableOpacity
+            style={[styles.wrapper, {backgroundColor: '#fff'}]}
+            onPress={(event) => {
+                navigation.navigate('PlaceDetail', {
+                    placeId,
+                    title,
+                    description,
+                    image,
+                    location,
+                    star,
+                    price,
+                    type_place,
+                    latitude,
+                    longitude,
+                    state
+                });
+            }}
         >
-            <Card.Image
-                source={{uri: image}} alt={title}
+            <Image
+                source={{uri: image}}
+                style={{height: 150, resizeMode: 'stretch'}}
             />
             <TouchableOpacity
-                style={{padding: 5, position: 'absolute', top: 0, right: 0}}
+                style={{padding: 10, position: 'absolute', top: 0, right: 0}}
                 onPress={() => {
                     dispatch(addWishlistPlace({title, star, image, price}))
                 }}
@@ -52,16 +68,20 @@ function PlaceCard(
                     justifyContent: 'space-between',
                     alignItems: 'flex-start'
                 }}>
-                    <Card.Title
+                    <Text
                         numberOfLines={2}
                         style={[styles.card_body.title, {color: '#000', width: '80%'}]}
                     >
                         {title}
-                    </Card.Title>
-                    <Button size='sm' type="solid" color='#2DD35C' radius={'10'} buttonStyle={{padding: 4}}>
+                    </Text>
+                    <TouchableOpacity style={[styles.flex_row, {
+                        backgroundColor: activeColors.background_button,
+                        padding: 3,
+                        borderRadius: 5
+                    }]}>
                         <Text style={{marginRight: 3, color: '#fff', fontSize: 12}}>{star}</Text>
                         <FontAwesomeIcon icon={faStar} size={10} color={'#fff'}/>
-                    </Button>
+                    </TouchableOpacity>
                 </View>
                 <Text
                     numberOfLines={2}
@@ -70,12 +90,18 @@ function PlaceCard(
                 <Text className="text-gray-600"
                       style={[styles.card_body.price, {color: activeColors.primary, width: '92%'}]}
                 >{price}</Text>
-                <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <Button type={'clear'}
-                            icon={<FontAwesomeIcon icon={faLocationDot} size={13} color={activeColors.primary}/>}>
-                        <Text style={{fontSize: 13}}>{latitude}, {longitude}</Text>
-                    </Button>
-                    <Text style={[ styles.card_body.state,{ color: (state === 'Available') ? activeColors.primary : '#E56C44'}]}>
+                <View style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center'
+                }}>
+                    <View style={styles.flex_row}>
+                        <FontAwesomeIcon icon={faLocationDot} size={13} color={activeColors.primary}/>
+                        <Text style={{fontSize: 13, marginLeft: 10}}>1.2km from HaNoi</Text>
+                    </View>
+                    <Text
+                        style={[styles.card_body.state, {color: (state === 'Available') ? activeColors.primary : '#E56C44'}]}>
                         {state}
                     </Text>
                 </View>
@@ -85,10 +111,17 @@ function PlaceCard(
 }
 
 const styles = StyleSheet.create({
+    flex_row: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: "center",
+    },
     wrapper: {
         marginTop: 26,
         position: "relative",
         borderRadius: 4,
+        overflow: "hidden",
     },
     card_body: {
         paddingVertical: 10,
@@ -96,6 +129,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: 'column',
         title: {
+            marginBottom: 10,
             textAlign: 'left',
             fontSize: 18,
             fontWeight: 700,

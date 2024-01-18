@@ -1,9 +1,8 @@
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
-import HomeScreen from "./src/screens/HomeScreen";
+import HomeTabs from "./src/screens/HomeTabs";
 import PlaceDetailScreen from "./src/screens/PlaceDetailScreen";
 import AdvancedSearch from "./src/screens/AdvancedSearchScreen";
-import FilterScreen from "./src/screens/FilterScreen";
 import {Provider} from "react-redux";
 import {store} from "./src/store/store";
 import React, {useEffect, useState} from "react";
@@ -68,12 +67,11 @@ export default function App() {
                 <NavigationContainer>
                     <RootStack.Navigator screenOptions={{headerShown: false}}>
                         <RootStack.Group>
-                            <RootStack.Screen name="Home" component={HomeScreen}/>
+                            <RootStack.Screen name="HomeTabs" component={HomeTabs}/>
                             <RootStack.Screen name="PlaceDetail" component={PlaceDetailScreen}/>
                         </RootStack.Group>
                         <RootStack.Group screenOptions={{presentation: 'modal'}}>
                             <RootStack.Screen name="AdvancedSearch" component={AdvancedSearch}/>
-                            <RootStack.Screen name="Filter" component={FilterScreen}/>
                         </RootStack.Group>
                     </RootStack.Navigator>
                 </NavigationContainer>
