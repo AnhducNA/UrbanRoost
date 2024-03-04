@@ -2,17 +2,37 @@ const connection = require('../database');
 
 
 class Place {
-    static async getPlaces() {
+    static async getPlaces(limit, offset) {
+        limit = (limit) ? limit: 10;
+        offset = (offset) ? offset: 0;
         return new Promise((resolve, reject) => {
-            const sql = `SELECT place.*, place_type.type_name, place_type.description, rate.star, rate.content FROM place 
-                LEFT JOIN place_type ON place.place_type_id = place_type.id 
-                LEFT JOIN rate ON place.id=rate.place_id`;
             connection.query(
-                sql,
+                `SELECT place.*, place_type.type_name, place_type.description, rate.star, rate.content FROM place 
+                LEFT JOIN place_type ON place.place_type_id = place_type.id 
+                LEFT JOIN rate ON place.id=rate.place_id 
+                LIMIT ? OFFSET ?`,
+                [+limit, +offset],
                 (err, response) => {
                     if (err) {
                         reject(err);
-                        console.log(err)
+                        console.log(err.message, err.sql)
+                        return;
+                    }
+                    resolve(response);
+                }
+            );
+        });
+    }
+    static async getTotalPlaces() {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                `SELECT count(*) as count FROM place 
+                LEFT JOIN place_type ON place.place_type_id = place_type.id 
+                LEFT JOIN rate ON place.id=rate.place_id`,
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        console.log(err.message, err.sql)
                         return;
                     }
                     resolve(response);
@@ -30,7 +50,7 @@ class Place {
                 (err, response) => {
                     if (err) {
                         reject(err);
-                        console.log(err)
+                        console.log(err.message, err.sql)
                         return;
                     }
                     resolve(response);
