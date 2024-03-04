@@ -2,24 +2,33 @@ import React, {useEffect, useState} from 'react';
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faEye, faRemove} from "@fortawesome/free-solid-svg-icons";
+import {faAdd, faEdit, faEye, faRemove} from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../../components/Tables/Pagination";
 import request from "../../api/request";
+import {Link} from "react-router-dom";
 
 const PlaceTable = () => {
     const [placeList, setPlaceList] = useState([]);
-    const getPlaces = async () => {
+    const [totalData, setTotalData] = useState()
+    const [totalPage, setTotalPage] = useState()
+    const [page, setPage] = useState(1);
+    const limit = 5;
+    const getPlaces = async (limit, page) => {
         try {
-            await request.getPlaces().then((response) => {
-                setPlaceList(response.data);
+            await request.getPlaces(limit, page).then((response) => {
+                setPlaceList(response.data.data);
+                limit = setTotalData(response.data.pagination.limit) ? setTotalData(response.data.pagination.limit) : limit
+                page = setTotalData(response.data.pagination.page) ? setTotalData(response.data.pagination.page) : page
+                setTotalData(response.data.pagination.totalData)
+                setTotalPage(response.data.pagination.totalPage)
             });
         } catch (error) {
             console.log('Error getPlaces: ' + error.message);
         }
     };
     useEffect(() => {
-        getPlaces();
-    }, []);
+        getPlaces(limit, page);
+    }, [page]);
     return (
         <DefaultLayout>
             <Breadcrumb pageName={'Rooms'}/>
@@ -51,10 +60,10 @@ const PlaceTable = () => {
                             {
                                 placeList.length > 0 && placeList.map((placeItem, key) => (
                                     <tr key={key}>
-                                        <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">{placeItem.id}</td>
+                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark xl:pl-11">{placeItem.id}</td>
                                         <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                             <h5 className="font-medium text-black dark:text-white">
-                                                {(placeItem.title && placeItem.title.length > 250) ? placeItem.title.substring(0, 250) : placeItem.title}
+                                                {(placeItem.title && placeItem.title.length > 250) ? placeItem.title.substring(0, 250) + '...' : placeItem.title}
                                             </h5>
                                             <p className="text-sm">Price: {placeItem.price}</p>
                                         </td>
@@ -96,8 +105,23 @@ const PlaceTable = () => {
 
                         </table>
                         {/* Pagination */}
-                        <Pagination/>
+                        <Pagination
+                            limit={limit}
+                            page={page}
+                            totalPage={totalPage}
+                            totalData={totalData}
+                            onPageChange = {(page) => setPage(page)}
+                        />
                         {/*    End Pagination */}
+                    </div>
+                    <div className="my-3.5 flex flex-wrap gap-5 xl:gap-7.5">
+                        <Link
+                            to="/admin/place/new"
+                            className=" inline-flex items-center justify-center gap-2.5  bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10"
+                        >
+                            <FontAwesomeIcon icon={faAdd} fontSize={20}/>
+                            New Place
+                        </Link>
                     </div>
                 </div>
             </div>
