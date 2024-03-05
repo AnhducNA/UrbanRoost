@@ -7,7 +7,7 @@ import Pagination from "../../components/Tables/Pagination";
 import request from "../../api/request";
 import {Link} from "react-router-dom";
 
-const PlaceTable = () => {
+const PlaceList = () => {
     const [placeList, setPlaceList] = useState([]);
     const [totalData, setTotalData] = useState()
     const [totalPage, setTotalPage] = useState()
@@ -87,9 +87,11 @@ const PlaceTable = () => {
                                         </td>
                                         <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                             <div className="flex items-center space-x-3.5">
-                                                <button className="hover:text-primary">
+                                                <Link
+                                                    to={`/admin/place/${placeItem.id}`}
+                                                    className="hover:text-primary">
                                                     <FontAwesomeIcon icon={faEye} fontSize={18}/>
-                                                </button>
+                                                </Link>
                                                 <button className="hover:text-primary">
                                                     <FontAwesomeIcon icon={faEdit} fontSize={18}/>
                                                 </button>
@@ -129,4 +131,4 @@ const PlaceTable = () => {
     );
 };
 
-export default PlaceTable;
+export default PlaceList;
