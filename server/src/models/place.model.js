@@ -3,8 +3,8 @@ const connection = require('../database');
 
 class Place {
     static async getPlaces(limit, offset) {
-        limit = (limit) ? limit: 10;
-        offset = (offset) ? offset: 0;
+        limit = (limit) ? limit : 10;
+        offset = (offset) ? offset : 0;
         return new Promise((resolve, reject) => {
             connection.query(
                 `SELECT place.*, place_type.type_name, place_type.description, rate.star, rate.content FROM place 
@@ -23,6 +23,7 @@ class Place {
             );
         });
     }
+
     static async getTotalPlaces() {
         return new Promise((resolve, reject) => {
             connection.query(
@@ -43,10 +44,10 @@ class Place {
 
     static async getPlaceById(placeId) {
         return new Promise((resolve, reject) => {
-            const sql = `SELECT * FROM place WHERE place.id = ` + placeId +
-                `LEFT JOIN rate ON place.id = rate.id`;
             connection.query(
-                sql,
+                `SELECT place.*, user.name as name_user FROM place LEFT JOIN user ON place.user_id=user.id
+                WHERE place.id = ? `,
+                placeId,
                 (err, response) => {
                     if (err) {
                         reject(err);

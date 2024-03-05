@@ -11,9 +11,6 @@ app.use(express.json());
 
 initRoute(app);
 
-app.get('/message', (req, res) => {
-    res.json({ message: "Hello from server!" });
-});
 app.listen(port, () => {
     console.log('Server is running on port: ' + port);
 });
