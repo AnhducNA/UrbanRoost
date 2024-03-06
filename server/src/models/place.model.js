@@ -1,7 +1,7 @@
 const connection = require('../database');
 
 
-class Place {
+class PlaceModel {
     static async getPlaces(limit, offset) {
         limit = (limit) ? limit : 10;
         offset = (offset) ? offset : 0;
@@ -79,4 +79,4 @@ class Place {
 
 }
 
-module.exports = Place;
+module.exports = PlaceModel;
