@@ -119,7 +119,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
                             </li>
                             {/* <!-- End Menu Item Dashboard --> */}
 
-                            {/* <!-- Menu Item Room --> */}
+                            {/* <!-- Menu Item Place --> */}
                             <SidebarLinkGroup
                                 activeCondition={
                                     pathname === "/forms" || pathname.includes("forms")
@@ -140,7 +140,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
                                                 }}
                                             >
                                                 <FontAwesomeIcon icon={faLocationDot} fontSize={18}/>
-                                                Room
+                                                Place
                                                 <FontAwesomeIcon icon={faAngleDown}
                                                                  className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open &&
                                                                  "rotate-180"}`} fontSize={20}/>
@@ -160,7 +160,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
                                                                 (isActive && "!text-white")
                                                             }
                                                         >
-                                                            Table Rooms
+                                                            Table Places
                                                         </NavLink>
                                                     </li>
                                                     <li>
@@ -171,7 +171,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
                                                                 (isActive && "!text-white")
                                                             }
                                                         >
-                                                            New Room
+                                                            New Place
                                                         </NavLink>
                                                     </li>
                                                 </ul>
@@ -181,7 +181,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
                                     )
                                 }}
                             </SidebarLinkGroup>
-                            {/* <!-- End Menu Item Room --> */}
+                            {/* <!-- End Menu Item Place --> */}
 
                             {/* <!-- Menu Item Booking --> */}
                             <li>

@@ -42,14 +42,14 @@ const PlaceList = () => {
                                 <th className="py-4 px-4 text-black dark:text-white xl:pl-11">
                                     Id
                                 </th>
-                                <th className="max-w-203 py-4 px-4 text-black dark:text-white">
+                                <th className="min-w-[350px] py-4 px-4 text-black dark:text-white">
                                     Title
                                 </th>
-                                <th className="min-w-[150px] py-4 px-4 text-black dark:text-white">
-                                    Invoice date
+                                <th className="min-w-[250px] py-4 px-4 text-black dark:text-white">
+                                    Location
                                 </th>
                                 <th className="min-w-[120px] py-4 px-4 text-black dark:text-white">
-                                    Status
+                                    State
                                 </th>
                                 <th className="py-4 px-4 text-black dark:text-white">
                                     Actions

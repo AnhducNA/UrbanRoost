@@ -10,6 +10,12 @@ const request = {
     createPlace(place) {
         return axiosClient.post(`/api/place`, place);
     },
+    getBookings(limit, page) {
+        return axiosClient.get(`/api/booking?limit=${limit}&page=${page}`);
+    },
+    getBookingById(bookingId) {
+        return axiosClient.get(`/api/booking/${bookingId}`);
+    },
 };
 
 export default request;
