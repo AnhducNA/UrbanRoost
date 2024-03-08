@@ -6,7 +6,7 @@ import {
     faAngleDown,
     faBook,
     faGauge,
-    faLocationDot,
+    faLocationDot, faUser,
     faUsers,
     faUsersViewfinder
 } from "@fortawesome/free-solid-svg-icons";
@@ -196,20 +196,20 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
                                 </NavLink>
                             </li>
                             {/* <!-- End Menu Item Booking --> */}
-                            {/* <!-- Menu Item Booking --> */}
+
+                            {/* <!-- Menu Item User --> */}
                             <li>
                                 <NavLink
-                                    to="/admin/booking/list"
+                                    to="/admin/user/list"
                                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes(
-                                        "calendar"
+                                        "profile"
                                     ) && "bg-graydark dark:bg-meta-4"}`}
                                 >
-                                    <FontAwesomeIcon icon={faUsersViewfinder} fontSize={18}/>
-                                    Guess
+                                    <FontAwesomeIcon icon={faUsers} fontSize={18}/>
+                                    Users
                                 </NavLink>
                             </li>
-                            {/* <!-- End Menu Item Booking --> */}
-
+                            {/* <!-- Menu Item User --> */}
                             {/* <!-- Menu Item Profile --> */}
                             <li>
                                 <NavLink
@@ -218,7 +218,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
                                         "profile"
                                     ) && "bg-graydark dark:bg-meta-4"}`}
                                 >
-                                    <FontAwesomeIcon icon={faUsers} fontSize={18}/>
+                                    <FontAwesomeIcon icon={faUser} fontSize={18}/>
                                     Users
                                 </NavLink>
                             </li>

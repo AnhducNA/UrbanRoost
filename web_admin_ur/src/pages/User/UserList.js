@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import DefaultLayout from "../../layout/DefaultLayout";
 import request from "../../api/request";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
+import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAdd, faEdit, faEye, faRemove} from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../../components/Tables/Pagination";
-import {Link} from "react-router-dom";
 
-const BookingList = () => {
+const UserList = () => {
     const [bookingList, setBookingList] = useState([]);
     const [totalData, setTotalData] = useState()
     const [totalPage, setTotalPage] = useState()
@@ -15,7 +15,7 @@ const BookingList = () => {
     const limit = 5;
     const getPlaces = async (limit, page) => {
         try {
-            await request.getBookings(limit, page).then((response) => {
+            await request.getUserList(limit, page).then((response) => {
                 setBookingList(response.data.data);
                 limit = setTotalData(response.data.pagination.limit) ? setTotalData(response.data.pagination.limit) : limit
                 page = setTotalData(response.data.pagination.page) ? setTotalData(response.data.pagination.page) : page
@@ -31,7 +31,7 @@ const BookingList = () => {
     }, [page]);
     return (
         <DefaultLayout>
-            <Breadcrumb pageName={'Booking'}/>
+            <Breadcrumb pageName={'User'}/>
             <div className="flex flex-col gap-10">
                 <div
                     className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -43,13 +43,16 @@ const BookingList = () => {
                                     Id
                                 </th>
                                 <th className="w-fit py-4 px-4 text-black dark:text-white">
-                                    User's Booking
+                                    Name
                                 </th>
-                                <th className="min-w-[350px]  py-4 px-4 text-black dark:text-white">
-                                    Place's Booking
+                                <th className="min-w-[200px]  py-4 px-4 text-black dark:text-white">
+                                    Email
                                 </th>
                                 <th className="w-fit py-4 px-4 text-black dark:text-white">
-                                    Time
+                                    Phone
+                                </th>
+                                <th className="w-fit py-4 px-4 text-black dark:text-white">
+                                    Created_at
                                 </th>
                                 <th className="py-4 px-4 text-black dark:text-white">
                                     Actions
@@ -58,34 +61,34 @@ const BookingList = () => {
                             </thead>
                             <tbody>
                             {
-                                bookingList.length > 0 && bookingList.map((bookingItem, key) => {
+                                bookingList.length > 0 && bookingList.map((userItem, key) => {
                                         return (
                                             <tr key={key}>
-                                                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark xl:pl-11">{bookingItem.id}</td>
+                                                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark xl:pl-11">{userItem.id}</td>
                                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                                     <p className="text-black dark:text-white">
-                                                        {bookingItem.user_name}
+                                                        {userItem.name}
                                                     </p>
                                                 </td>
                                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                                    <h5 className="font-medium text-black dark:text-white">
-                                                        {(bookingItem.place_title && bookingItem.place_title.length > 250)
-                                                            ? bookingItem.place_title.substring(0, 250) + '...'
-                                                            : bookingItem.place_title}
-                                                    </h5>
-                                                    <p className="text-sm">Price: {bookingItem.place_price}</p>
+                                                    <p className="font-medium text-black dark:text-white">
+                                                        {userItem.email}
+                                                    </p>
+                                                </td>
+                                                <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                                    <p className="font-medium text-black dark:text-white">
+                                                        {userItem.phone}
+                                                    </p>
                                                 </td>
                                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                                     <p className="text-black dark:text-white">
-                                                        {bookingItem.time_in}
-                                                        <span className='block'> - </span>
-                                                        {bookingItem.time_out}
+                                                        {userItem.created_at}
                                                     </p>
                                                 </td>
                                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                                     <div className="flex items-center space-x-3.5">
                                                         <Link
-                                                            to={`/admin/booking/${bookingItem.id}`}
+                                                            to={`/admin/user/${userItem.id}`}
                                                             className="hover:text-primary">
                                                             <FontAwesomeIcon icon={faEye} fontSize={18}/>
                                                         </Link>
@@ -129,4 +132,4 @@ const BookingList = () => {
     );
 };
 
-export default BookingList;
+export default UserList;

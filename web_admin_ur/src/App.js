@@ -8,6 +8,8 @@ import CreatePlace from "./pages/Place/CreatePlace";
 import BookingList from "./pages/Booking/BookingList";
 import DetailPlace from "./pages/Place/DetailPlace";
 import DetailBooking from "./pages/Booking/DetailBooking";
+import UserList from "./pages/User/UserList";
+import DetailUser from "./pages/User/DetailUser";
 
 function App() {
 
@@ -21,6 +23,8 @@ function App() {
                         <Route path={'/admin/place/new'} element={<CreatePlace/>}></Route>
                         <Route path={'/admin/booking/list'} element={<BookingList/>}></Route>
                         <Route path={'/admin/booking/:bookingId'} element={<DetailBooking/>}></Route>
+                        <Route path={'/admin/user/list'} element={<UserList/>}></Route>
+                        <Route path={'/admin/user/:userId'} element={<DetailUser/>}></Route>
                         <Route path={'/auth/login'} element={<Login/>}/>
                         <Route path={'/auth/register'} element={<Register/>}/>
                         <Route path={'*'} element={<Navigate to={'admin'} replace={false}/>}/>

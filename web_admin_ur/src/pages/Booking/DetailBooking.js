@@ -68,7 +68,6 @@ const DetailBooking = () => {
                                     <strong>Price:</strong> {booking.place_price}
                                 </p>
                             </div>
-
                         </div>
                     </div>
                     <div className="mb-5.5 ">
@@ -135,8 +134,7 @@ const DetailBooking = () => {
                             </div>
                         </div>
                     </div>
-
-                    <div className="flex justify-end gap-4.5">
+                    <div className="mb-5.5 flex justify-end gap-4.5">
                         <button
                             onClick={() => {
                                 window.history.back()
@@ -145,12 +143,6 @@ const DetailBooking = () => {
                             type="submit"
                         >
                             Cancel
-                        </button>
-                        <button
-                            className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
-                            type="submit"
-                        >
-                            Save
                         </button>
                     </div>
                 </div>

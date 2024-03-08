@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faMapLocation, faMoneyBill, faPenToSquare, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 import request from "../../api/request";
 
 const DetailPlace = () => {
@@ -168,18 +168,15 @@ const DetailPlace = () => {
                         </div>
                     </div>
 
-                    <div className="flex justify-end gap-4.5">
+                    <div className="mb-5.5 flex justify-end gap-4.5">
                         <button
                             className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
                             type="submit"
+                            onClick={() => {
+                                window.history.back()
+                            }}
                         >
                             Cancel
-                        </button>
-                        <button
-                            className="flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90"
-                            type="submit"
-                        >
-                            Save
                         </button>
                     </div>
                 </div>
