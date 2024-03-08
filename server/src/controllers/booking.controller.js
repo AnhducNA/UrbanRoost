@@ -29,9 +29,9 @@ module.exports = {
         }
     },
     getBookingById: async (req, res) => {
-        const idBooking = req.params.idBooking;
+        const bookingId = req.params.idBooking;
         try {
-            const bookingDetail = await BookingModel.getBookingById(idBooking);
+            const bookingDetail = await BookingModel.getBookingById(bookingId);
             bookingDetail.forEach((booking) => {
                 booking.time_in = formatDate(booking.time_in)
                 booking.time_out = formatDate(booking.time_out)
