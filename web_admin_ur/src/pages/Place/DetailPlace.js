@@ -3,12 +3,14 @@ import {Link, useParams} from "react-router-dom";
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPenToSquare} from "@fortawesome/free-solid-svg-icons";
+import {faEye, faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 import request from "../../api/request";
 
 const DetailPlace = () => {
     const {idPlace} = useParams();
     const [place, setPlace] = useState([]);
+    const [rateAboutPlaceId, setRateAboutPlaceId] = useState([]);
+    const [rateAverageAboutPlaceId, setRateAverageAboutPlaceId] = useState([]);
     const getPlaceById = async (idPlace) => {
         try {
             await request.getPlaceById(idPlace).then((response) => {
@@ -17,9 +19,20 @@ const DetailPlace = () => {
         } catch (e) {
             console.log('Error getPlaceById: ' + e.message)
         }
-    }
+    };
+    const getRateAboutPlaceId = async (idPlace) => {
+        try {
+            await request.getRateAboutPlaceId(idPlace).then((response) => {
+                setRateAboutPlaceId(response.data.data);
+                setRateAverageAboutPlaceId(response.data.rateAverage);
+            });
+        } catch (e) {
+            console.log('Error getPlaceById: ' + e.message);
+        }
+    };
     useEffect(() => {
-        getPlaceById(idPlace)
+        getPlaceById(idPlace);
+        getRateAboutPlaceId(idPlace);
     }, [idPlace]);
     return (
         <DefaultLayout>
@@ -64,7 +77,7 @@ const DetailPlace = () => {
                         </div>
                     </div>
                     <div className="mb-5.5 flex flex-col sm:flex-row gap-5">
-                        <div className="w-full sm:w-1/3">
+                        <div className="w-full sm:w-1/4">
                             <b
                                 className="mb-3 block text-sm text-black dark:text-white"
                             >
@@ -82,7 +95,7 @@ const DetailPlace = () => {
                                 {place.state}
                             </p>
                         </div>
-                        <div className="w-full sm:w-1/3">
+                        <div className="w-full sm:w-1/4">
                             <b
                                 className="mb-3 block text-sm text-black dark:text-white"
                             >
@@ -96,7 +109,7 @@ const DetailPlace = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="w-full sm:w-1/3">
+                        <div className="w-full sm:w-1/4">
                             <b
                                 className="mb-3 block text-sm text-black dark:text-white"
                             >
@@ -104,10 +117,24 @@ const DetailPlace = () => {
                             </b>
                             <div>
                                 <Link to={`/admin/user/${place.user_id}`}
+                                      className="w-full block hover:underline rounded border border-stroke bg-gray py-3 px-4.5 text-black dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                                >
+                                    User: {place.user_id} <br/> Name: {place.user_name}
+                                </Link>
+                            </div>
+                        </div>
+                        <div className="w-full sm:w-1/4">
+                            <b
+                                className="mb-3 block text-sm text-black dark:text-white"
+                            >
+                                Star
+                            </b>
+                            <div>
+                                <p
                                     className="w-full block hover:underline rounded border border-stroke bg-gray py-3 px-4.5 text-black dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                 >
-                                   User: {place.user_id} <br/> Name: {place.user_name}
-                                </Link>
+                                    {rateAverageAboutPlaceId}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -151,7 +178,86 @@ const DetailPlace = () => {
                             ></textarea>
                         </div>
                     </div>
-
+                    {/* Table Rate about Place */}
+                    <div className="mb-5.5 ">
+                        <div className="w-full">
+                            <b
+                                className="mb-3 block text-sm text-black dark:text-white"
+                            >
+                                Rate about Place
+                            </b>
+                            <table className="w-full table-auto">
+                                <thead>
+                                <tr className="bg-gray-2 text-left dark:bg-meta-4">
+                                    <th className="w-fit py-4 px-4 text-black dark:text-white xl:pl-11">
+                                        Id
+                                    </th>
+                                    <th className="min-w  py-4 px-4 text-black dark:text-white">
+                                        From
+                                    </th>
+                                    <th className="min-w  py-4 px-4 text-black dark:text-white">
+                                        Star
+                                    </th>
+                                    <th className="min-w-[350px]  py-4 px-4 text-black dark:text-white">
+                                        Content
+                                    </th>
+                                    <th className="w-fit py-4 px-4 text-black dark:text-white">
+                                        Created At
+                                    </th>
+                                    <th className="w-fit py-4 px-4 text-black dark:text-white">
+                                        Actions
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {
+                                    rateAboutPlaceId.length > 0 && rateAboutPlaceId.map((rateItem, key) => {
+                                            return (
+                                                <tr key={key}>
+                                                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark xl:pl-11">{rateItem.id}</td>
+                                                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                                        <Link to={`/admin/user/${rateItem.place_id}`}
+                                                              className="font-medium text-black dark:text-white hover:underline">
+                                                            {('User: ' + rateItem.from_user_id)}
+                                                        </Link>
+                                                    </td>
+                                                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                                        <p
+                                                            className="font-medium text-black dark:text-white hover:underline">
+                                                            {rateItem.star}
+                                                        </p>
+                                                    </td>
+                                                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                                        <p className="font-medium text-black dark:text-white">
+                                                            {(rateItem.content && rateItem.content.length > 250)
+                                                                ? rateItem.content.substring(0, 250) + '...'
+                                                                : rateItem.content}
+                                                        </p>
+                                                    </td>
+                                                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                                        <p className="text-black dark:text-white">
+                                                            {rateItem.created_at}
+                                                        </p>
+                                                    </td>
+                                                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                                                        <div className="flex justify-center items-center space-x-3.5">
+                                                            <Link
+                                                                to={`/admin/rate/${rateItem.id}`}
+                                                                className="hover:text-primary">
+                                                                <FontAwesomeIcon icon={faEye} fontSize={18}/>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }
+                                    )
+                                }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {/* End Table Rate about Place */}
                     <div className="mb-5.5 flex justify-end gap-4.5">
                         <button
                             className="flex justify-center rounded border border-stroke py-2 px-6 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"

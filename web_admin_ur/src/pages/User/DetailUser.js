@@ -263,7 +263,6 @@ const DetailPlace = () => {
                                 <tbody>
                                 {
                                     rateByUserId.length > 0 && rateByUserId.map((rateItem, key) => {
-                                            console.log(rateItem.to_user_id)
                                             return (
                                                 <tr key={key}>
                                                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark xl:pl-11">{rateItem.id}</td>
@@ -298,7 +297,7 @@ const DetailPlace = () => {
                                                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                                         <div className="flex justify-center items-center space-x-3.5">
                                                             <Link
-                                                                to={`/admin/place/${rateItem.id}`}
+                                                                to={`/admin/rate/${rateItem.id}`}
                                                                 className="hover:text-primary">
                                                                 <FontAwesomeIcon icon={faEye} fontSize={18}/>
                                                             </Link>
@@ -313,7 +312,7 @@ const DetailPlace = () => {
                             </table>
                         </div>
                     </div>
-                    {/* End Table Place's User*/}
+                    {/* End Table Rate's User*/}
                     <div className="mb-5.5 flex justify-end gap-4.5">
                         <button
                             onClick={() => {

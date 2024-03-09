@@ -7,6 +7,9 @@ const request = {
     getPlaceById(placeId) {
         return axiosClient.get(`/api/place/${placeId}`);
     },
+    getRateAboutPlaceId(placeId) {
+        return axiosClient.get(`/api/place/${placeId}/rate`);
+    },
     createPlace(place) {
         return axiosClient.post(`/api/place`, place);
     },

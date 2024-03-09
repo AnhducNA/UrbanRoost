@@ -55,16 +55,16 @@ const DetailRate = () => {
                             {(rate.place_id) ?
                                 (
                                     <Link to={`/admin/place/${rate.place_id}`}
-                                          className="w-full block rounded border border-stroke bg-gray py-3 px-4.5 text-black dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                                          className="w-full block rounded border border-stroke bg-gray py-3 px-4.5 text-black hover:underline dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                     >
                                         Place: {rate.place_id}
                                     </Link>
                                 ) :
                                 (
                                     <Link to={`/admin/user/${rate.to_user_id}`}
-                                          className="w-full block rounded border border-stroke bg-gray py-3 px-4.5 text-black dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                                          className="w-full block rounded border border-stroke bg-gray py-3 px-4.5 text-black hover:underline dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                     >
-                                        User: {rate.to_user_id} <br/> Name: {rate.to_user_name}
+                                        User: {rate.to_user_id}
                                     </Link>
                                 )}
                         </div>
