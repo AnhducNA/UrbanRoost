@@ -10,6 +10,8 @@ import DetailPlace from "./pages/Place/DetailPlace";
 import DetailBooking from "./pages/Booking/DetailBooking";
 import UserList from "./pages/User/UserList";
 import DetailUser from "./pages/User/DetailUser";
+import RateList from "./pages/Rate/RateList";
+import DetailRate from "./pages/Rate/DetailRate";
 
 function App() {
 
@@ -17,7 +19,7 @@ function App() {
             <BrowserRouter>
                 <div className="App">
                     <Routes>
-                        <Route path={'/admin'} element={<AdminScreen/>} index={true}></Route>
+                        <Route path={'/admin/dashboard'} element={<AdminScreen/>} index={true}></Route>
                         <Route path={'/admin/place/list'} element={<PlaceList/>}></Route>
                         <Route path={'/admin/place/:idPlace'} element={<DetailPlace/>}></Route>
                         <Route path={'/admin/place/new'} element={<CreatePlace/>}></Route>
@@ -25,9 +27,11 @@ function App() {
                         <Route path={'/admin/booking/:bookingId'} element={<DetailBooking/>}></Route>
                         <Route path={'/admin/user/list'} element={<UserList/>}></Route>
                         <Route path={'/admin/user/:userId'} element={<DetailUser/>}></Route>
+                        <Route path={'/admin/rate/list'} element={<RateList/>}></Route>
+                        <Route path={'/admin/rate/:rateId'} element={<DetailRate/>}></Route>
                         <Route path={'/auth/login'} element={<Login/>}/>
                         <Route path={'/auth/register'} element={<Register/>}/>
-                        <Route path={'*'} element={<Navigate to={'admin'} replace={false}/>}/>
+                        <Route path={'*'} element={<Navigate to={'admin/dashboard'} replace={false}/>}/>
                     </Routes>
                 </div>
             </BrowserRouter>

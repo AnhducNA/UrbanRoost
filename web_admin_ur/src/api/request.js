@@ -30,7 +30,13 @@ const request = {
     },
     getRateByUserId(userId) {
         return axiosClient.get(`/api/user/${userId}/rate`)
-    }
+    },
+    getRateList(limit, page) {
+        return axiosClient.get(`/api/rate?limit=${limit}&page=${page}`);
+    },
+    getRateById(rateId) {
+        return axiosClient.get(`/api/rate/${rateId}`);
+    },
 };
 
 export default request;

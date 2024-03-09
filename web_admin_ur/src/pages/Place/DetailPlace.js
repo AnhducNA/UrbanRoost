@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -13,7 +13,6 @@ const DetailPlace = () => {
         try {
             await request.getPlaceById(idPlace).then((response) => {
                 setPlace(response.data[0])
-                console.log(place)
             });
         } catch (e) {
             console.log('Error getPlaceById: ' + e.message)
@@ -104,11 +103,11 @@ const DetailPlace = () => {
                                 Owned by
                             </b>
                             <div>
-                                <p
-                                   className="w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                                <Link to={`/admin/user/${place.user_id}`}
+                                    className="w-full block hover:underline rounded border border-stroke bg-gray py-3 px-4.5 text-black dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                 >
-                                    {place.name_user}
-                                </p>
+                                   User: {place.user_id} <br/> Name: {place.user_name}
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -118,37 +117,22 @@ const DetailPlace = () => {
                         >
                             Images
                         </b>
-                        {(place.img) ? (() => {
-                            return (
-                                <ul className=" w-full flex overflow-auto">
-                                    <li className="w-[250px] h-[300px] flex-none px-6 py-3">
-                                        <img src={place.img} alt="" className='w-full h-full rounded-xl'/>
-                                    </li>
-                                    <li className="w-[250px] h-[300px] flex-none px-6 py-3">
-                                        <img src={place.img} alt="" className='w-full h-full rounded-xl'/>
-                                    </li>
-                                    <li className="w-[250px] h-[300px] flex-none px-6 py-3">
-                                        <img src={place.img} alt="" className='w-full h-full rounded-xl'/>
-                                    </li>
-                                    <li className="w-[250px] h-[300px] flex-none px-6 py-3">
-                                        <img src={place.img} alt="" className='w-full h-full rounded-xl'/>
-                                    </li>
-                                    <li className="w-[250px] h-[300px] flex-none px-6 py-3">
-                                        <img src={place.img} alt="" className='w-full h-full rounded-xl'/>
-                                    </li>
-                                    <li className="w-[250px] h-[300px] flex-none px-6 py-3">
-                                        <img src={place.img} alt="" className='w-full h-full rounded-xl'/>
-                                    </li>
-                                    <li className="w-[250px] h-[300px] flex-none px-6 py-3">
-                                        <img src={place.img} alt="" className='w-full h-full rounded-xl'/>
-                                    </li>
-                                    <li className=" w-[250px] h-[300px]">
-                                        <img src={place.img} alt="" className='w-full h-full rounded-xl'/>
-                                    </li>
-                                </ul>
-                            )
-                        }) : ''}
-
+                        {(place.img) ? (
+                            <ul className=" w-full flex overflow-auto">
+                                <li className="w-[250px] h-[300px] flex-none px-6 py-3">
+                                    <img src={place.img} alt="" className='w-full h-full rounded-xl'/>
+                                </li>
+                                <li className="w-[250px] h-[300px] flex-none px-6 py-3">
+                                    <img src={place.img} alt="" className='w-full h-full rounded-xl'/>
+                                </li>
+                                <li className="w-[250px] h-[300px] flex-none px-6 py-3">
+                                    <img src={place.img} alt="" className='w-full h-full rounded-xl'/>
+                                </li>
+                                <li className="w-[250px] h-[300px] flex-none px-6 py-3">
+                                    <img src={place.img} alt="" className='w-full h-full rounded-xl'/>
+                                </li>
+                            </ul>
+                        ) : ''}
                     </div>
                     <div className="mb-5.5">
                         <b
@@ -176,7 +160,7 @@ const DetailPlace = () => {
                                 window.history.back()
                             }}
                         >
-                            Cancel
+                            Back
                         </button>
                     </div>
                 </div>
