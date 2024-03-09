@@ -7,8 +7,7 @@ module.exports = {
             let {limit, page} = (req.query);
             const offset = (page - 1) * limit;
             const places = await Place.getPlaces(limit, offset);
-            let totalPlaces = await Place.getTotalPlaces();
-            totalPlaces = totalPlaces[0].count;
+            let totalPlaces = (places && places.length);
             const totalPage = Math.ceil(totalPlaces / limit);
             res.json({
                 data: places,
