@@ -24,10 +24,8 @@ class RateModel {
     static async getRateById(rateId) {
         return new Promise((resolve, reject) => {
             connection.query(
-                `SELECT rate.*, from_user.name as from_user_name,
-                 to_user.name as to_user_name FROM rate
+                `SELECT rate.*, from_user.name as from_user_name FROM rate
                 JOIN user as from_user on rate.from_user_id = from_user.id
-                JOIN user as to_user on rate.to_user_id = to_user.id
                 WHERE rate.id = ?`,
                 rateId,
                 (err, response) => {

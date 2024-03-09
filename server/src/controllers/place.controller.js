@@ -31,6 +31,23 @@ module.exports = {
             res.status(500).json({message: err.message});
         }
     },
+    getRateAboutPlaceId: async (req, res) => {
+        const placeId = req.params.placeId;
+        try {
+            const rateList = await Place.getRateAboutPlaceId(placeId);
+            let rateTotal = 0;
+            (rateList && rateList.map(rateItem => {
+                rateTotal += parseInt(rateItem.star);
+            }))
+            const rateAverage = (rateTotal / rateList.length).toFixed(1);
+            res.json({
+                data: rateList,
+                rateAverage: rateAverage,
+            });
+        } catch (err) {
+            res.status(500).json({message: err.message});
+        }
+    },
     createPlace: async (req, res) => {
         const {
             title,

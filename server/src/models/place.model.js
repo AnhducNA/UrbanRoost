@@ -40,6 +40,23 @@ class PlaceModel {
             );
         });
     }
+    static async getRateAboutPlaceId(placeId) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                `SELECT * FROM rate
+                WHERE rate.place_id = ? `,
+                placeId,
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        console.log(err.message, err.sql)
+                        return;
+                    }
+                    resolve(response);
+                }
+            );
+        });
+    }
 
     static async createPlace(title) {
         return new Promise((resolve, reject) => {
