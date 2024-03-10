@@ -1,35 +1,43 @@
 import React, {useContext, useEffect, useState} from 'react';
+import request from "../../api/request";
 import {SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import PlaceCard from "../components/place/PlaceCard";
-import PlaceCategory from "../components/place/PlaceCategory";
-import categoryList from "../data/categoryData";
-import SearchComponent from "../components/search/SearchComponent";
-import {ThemeContext} from "../context/ThemeContext";
-import {colors} from "../config/theme";
-import request from "../api/request";
+import SearchComponent from "../../components/search/SearchComponent";
+import PlaceCategory from "../../components/place/PlaceCategory";
+import categoryList from "../../data/categoryData";
+import PlaceCard from "../../components/place/PlaceCard";
+import {ThemeContext} from "../../context/ThemeContext";
+import {colors} from "../../config/theme";
 import {useNavigation} from "@react-navigation/native";
 
-const HomeScreen = () => {
+const PlaceList = () => {
     // get Theme
     const {theme} = useContext(ThemeContext);
     const activeColors = colors[theme.mode];
     // navigation
     const navigation = useNavigation();
     const [categoryIndex, setCategoryIndex] = useState(1);
-    const [places, setPlaces] = useState([]);
-    const getPlaces = async () => {
+    // Set PlaceList and pagination
+    const [placeList, setPlaceList] = useState([]);
+    const [totalData, setTotalData] = useState()
+    const [totalPage, setTotalPage] = useState()
+    const [page, setPage] = useState(1);
+    const limit = 5;
+    const getPlaceList = async (limit, page) => {
         try {
-            await request.getPlaces().then((response) => {
-                setPlaces(response.data);
+            await request.getPlaces(limit, page).then((response) => {
+                setPlaceList(response.data.data);
+                limit = setTotalData(response.data.pagination.limit) ? setTotalData(response.data.pagination.limit) : limit
+                page = setTotalData(response.data.pagination.page) ? setTotalData(response.data.pagination.page) : page
+                setTotalData(response.data.pagination.totalData)
+                setTotalPage(response.data.pagination.totalPage)
             });
         } catch (error) {
-            console.log('Error getPlaces: ' + error.message);
+            console.log('Error getPlaceList: ' + error.message);
         }
     };
     useEffect(() => {
-        getPlaces();
-    }, []);
-
+        getPlaceList(limit, page);
+    }, [page]);
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: activeColors.background}]}>
             <TouchableOpacity style={[styles.container_header, {backgroundColor: activeColors.primary}]}
@@ -50,7 +58,7 @@ const HomeScreen = () => {
                     <Text style={{fontSize: 20, paddingLeft: 15}}>
                         Recently Added Room
                     </Text>
-                    {(places)?.map((placeItem, index) => {
+                    {(placeList)?.map((placeItem, index) => {
                         return (
                             <PlaceCard
                                 key={index}
@@ -73,6 +81,7 @@ const HomeScreen = () => {
         </SafeAreaView>
     );
 };
+
 // define styles
 const styles = StyleSheet.create({
     container: {
@@ -105,4 +114,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default HomeScreen;
+export default PlaceList;

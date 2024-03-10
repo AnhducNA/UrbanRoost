@@ -1,8 +1,8 @@
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
-import HomeTabs from "./src/screens/HomeTabs";
-import PlaceDetailScreen from "./src/screens/PlaceDetailScreen";
-import AdvancedSearch from "./src/screens/AdvancedSearchScreen";
+import HomeTabs from "./src/pages/HomeTabs";
+import PlaceDetailScreen from "./src/pages/Place/PlaceDetail";
+import AdvancedSearch from "./src/pages/AdvancedSearchScreen";
 import {Provider} from "react-redux";
 import {store} from "./src/store/store";
 import React, {useEffect, useState} from "react";
@@ -61,7 +61,7 @@ export default function App() {
     return (
         //we will pass the theme and updateTheme function
         //to the ThemeContext.Provider so that it can be
-        //used in all the screens of the app.
+        //used in all the pages of the app.
         <Provider store={store}>
             <ThemeContext.Provider value={{theme, updateTheme}}>
                 <NavigationContainer>

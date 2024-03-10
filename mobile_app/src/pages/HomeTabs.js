@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import HomeScreen from "./HomeScreen";
+import PlaceList from "./Place/PlaceList";
 import WishlistsScreen from "./WishlistsScreen";
 import InboxScreen from "./InboxScreen";
 import ProfileScreen from "./ProfileScreen";
@@ -79,7 +79,7 @@ const HomeTabs = () => {
                 },
             })}
         >
-            <Tab.Screen name="Home" component={HomeScreen}/>
+            <Tab.Screen name="Home" component={PlaceList}/>
             <Tab.Screen name="Search" component={AdvancedSearchScreen}/>
             <Tab.Screen name="Wishlists" component={WishlistsScreen}/>
             <Tab.Screen name="Inbox" component={InboxScreen}/>

@@ -8,13 +8,13 @@ import {
     View
 } from "react-native";
 import React, {useContext, useEffect, useState} from "react";
-import request from "../api/request";
+import request from "../../api/request";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faAngleLeft, faCircle, faHome, faLocationDot, faStar} from "@fortawesome/free-solid-svg-icons";
-import {ThemeContext} from "../context/ThemeContext";
-import {colors} from "../config/theme";
+import {ThemeContext} from "../../context/ThemeContext";
+import {colors} from "../../config/theme";
 
-const PlaceDetailScreen = ({route, navigation}) => {
+const PlaceDetail = ({route, navigation}) => {
     // get Theme
     const {theme} = useContext(ThemeContext);
     const activeColors = colors[theme.mode];
@@ -175,4 +175,4 @@ const styles = StyleSheet.create({
         borderRadius: 20
     }
 })
-export default PlaceDetailScreen;
+export default PlaceDetail;
