@@ -13,7 +13,7 @@ const BookingList = () => {
     const [totalPage, setTotalPage] = useState()
     const [page, setPage] = useState(1);
     const limit = 5;
-    const getPlaces = async (limit, page) => {
+    const getBookingsList = async (limit, page) => {
         try {
             await request.getBookings(limit, page).then((response) => {
                 setBookingList(response.data.data);
@@ -23,11 +23,11 @@ const BookingList = () => {
                 setTotalPage(response.data.pagination.totalPage)
             });
         } catch (error) {
-            console.log('Error getPlaces: ' + error.message);
+            console.log('Error getBookingsList: ' + error.message);
         }
     };
     useEffect(() => {
-        getPlaces(limit, page);
+        getBookingsList(limit, page);
     }, [page]);
     return (
         <DefaultLayout>

@@ -13,7 +13,7 @@ const RateList = () => {
     const [totalPage, setTotalPage] = useState()
     const [page, setPage] = useState(1);
     const limit = 5;
-    const getPlaces = async (limit, page) => {
+    const getRateList = async (limit, page) => {
         try {
             await request.getRateList(limit, page).then((response) => {
                 setRateList(response.data.data);
@@ -23,11 +23,11 @@ const RateList = () => {
                 setTotalPage(response.data.pagination.totalPage)
             });
         } catch (error) {
-            console.log('Error getPlaces: ' + error.message);
+            console.log('Error getRateList: ' + error.message);
         }
     };
     useEffect(() => {
-        getPlaces(limit, page);
+        getRateList(limit, page);
     }, [page]);
     return (
         <DefaultLayout>

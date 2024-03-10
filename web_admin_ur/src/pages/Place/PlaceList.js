@@ -13,7 +13,7 @@ const PlaceList = () => {
     const [totalPage, setTotalPage] = useState()
     const [page, setPage] = useState(1);
     const limit = 5;
-    const getPlaces = async (limit, page) => {
+    const getPlaceList = async (limit, page) => {
         try {
             await request.getPlaces(limit, page).then((response) => {
                 setPlaceList(response.data.data);
@@ -23,11 +23,11 @@ const PlaceList = () => {
                 setTotalPage(response.data.pagination.totalPage)
             });
         } catch (error) {
-            console.log('Error getPlaces: ' + error.message);
+            console.log('Error getPlaceList: ' + error.message);
         }
     };
     useEffect(() => {
-        getPlaces(limit, page);
+        getPlaceList(limit, page);
     }, [page]);
     return (
         <DefaultLayout>
