@@ -12,6 +12,8 @@ import UserList from "./pages/User/UserList";
 import DetailUser from "./pages/User/DetailUser";
 import RateList from "./pages/Rate/RateList";
 import DetailRate from "./pages/Rate/DetailRate";
+import CategoryList from "./pages/Category/CategoryList";
+import CategoryStore from "./pages/Category/CategoryStore";
 
 function App() {
 
@@ -29,6 +31,9 @@ function App() {
                         <Route path={'/admin/user/:userId'} element={<DetailUser/>}></Route>
                         <Route path={'/admin/rate/list'} element={<RateList/>}></Route>
                         <Route path={'/admin/rate/:rateId'} element={<DetailRate/>}></Route>
+                        <Route path={'/admin/category/list'} element={<CategoryList/>}></Route>
+                        <Route path={'/admin/category/new'} element={<CategoryStore/>}></Route>
+                        <Route path={'/admin/category/:categoryId/update'} element={<CategoryStore/>}></Route>
                         <Route path={'/auth/login'} element={<Login/>}/>
                         <Route path={'/auth/register'} element={<Register/>}/>
                         <Route path={'*'} element={<Navigate to={'admin/dashboard'} replace={false}/>}/>

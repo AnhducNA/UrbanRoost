@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
     faAngleDown,
     faBook,
-    faGauge,
+    faGauge, faIcons,
     faLocationDot, faStar,
     faUsers,
 } from "@fortawesome/free-solid-svg-icons";
@@ -209,7 +209,7 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
                                 </NavLink>
                             </li>
                             {/* <!-- Menu Item User --> */}
-                            {/* <!-- Menu Item Profile --> */}
+                            {/* <!-- Menu Item Rate --> */}
                             <li>
                                 <NavLink
                                     to="/admin/rate/list"
@@ -221,7 +221,71 @@ const Sidebar = ({sidebarOpen, setSidebarOpen}) => {
                                     Rate
                                 </NavLink>
                             </li>
-                            {/* <!-- Menu Item Profile --> */}
+                            {/* <!-- Menu Item Rate --> */}
+
+                            {/* <!-- Menu Item Category --> */}
+                            <SidebarLinkGroup
+                                activeCondition={
+                                    pathname === "/category" || pathname.includes("category")
+                                }
+                            >
+                                {(handleClick, open) => {
+                                    return (
+                                        <React.Fragment>
+                                            <NavLink
+                                                to="admin/category/list"
+                                                className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 
+                                                ${(pathname === "/category" || pathname.includes("category")) && "bg-graydark dark:bg-meta-4"}`}
+                                                onClick={e => {
+                                                    e.preventDefault()
+                                                    sidebarExpanded
+                                                        ? handleClick()
+                                                        : setSidebarExpanded(true)
+                                                }}
+                                            >
+                                                <FontAwesomeIcon icon={faIcons} fontSize={18}/>
+                                                Category
+                                                <FontAwesomeIcon icon={faAngleDown}
+                                                                 className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${open &&
+                                                                 "rotate-180"}`} fontSize={20}/>
+                                            </NavLink>
+                                            {/* <!-- Dropdown Menu Start --> */}
+                                            <div
+                                                className={`translate transform overflow-hidden ${!open &&
+                                                "hidden"}`}
+                                            >
+                                                <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
+                                                    <li>
+                                                        <NavLink
+                                                            to="/admin/category/list"
+                                                            className={({isActive}) =>
+                                                                "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
+                                                                (isActive && "!text-white")
+                                                            }
+                                                        >
+                                                            Category List
+                                                        </NavLink>
+                                                    </li>
+                                                    <li>
+                                                        <NavLink
+                                                            to="/admin/category/new"
+                                                            className={({isActive}) =>
+                                                                "group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white " +
+                                                                (isActive && "!text-white")
+                                                            }
+                                                        >
+                                                            New category
+                                                        </NavLink>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            {/* <!-- Dropdown Menu End --> */}
+                                        </React.Fragment>
+                                    )
+                                }}
+                            </SidebarLinkGroup>
+                            {/* <!-- End Menu Item Category --> */}
+
                         </ul>
                     </div>
                     {/* <!-- End Menu Group --> */}

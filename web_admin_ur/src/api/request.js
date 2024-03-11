@@ -40,6 +40,21 @@ const request = {
     getRateById(rateId) {
         return axiosClient.get(`/api/rate/${rateId}`);
     },
+    getCategoryList(limit, page) {
+        return axiosClient.get(`/api/category/?limit=${limit}&page=${page}`);
+    },
+    getCategoryById(categoryId) {
+        return axiosClient.get(`/api/category/${categoryId}`);
+    },
+    categoryNew(dataNew) {
+        return axiosClient.post(`/api/category`, dataNew);
+    },
+    categoryUpdate(dataUpdate) {
+        return axiosClient.put(`/api/category`, dataUpdate);
+    },
+    deleteCategoryById(categoryId) {
+        return axiosClient.delete(`/api/category/${categoryId}`);
+    },
 };
 
 export default request;
