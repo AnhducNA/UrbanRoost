@@ -2,33 +2,35 @@ import React, {useEffect, useState} from 'react';
 import DefaultLayout from "../../layout/DefaultLayout";
 import request from "../../api/request";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAdd, faEdit, faEye, faRemove} from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../../components/Tables/Pagination";
 
 const UserList = () => {
+    // Get Search
+    const location = useLocation();
+    const search = location.search.replace('?search=', '');
+    //  Pagination
     const [userList, setUserList] = useState([]);
     const [totalData, setTotalData] = useState()
     const [totalPage, setTotalPage] = useState()
     const [page, setPage] = useState(1);
     const limit = 5;
-    const getUsers = async (limit, page) => {
-        try {
-            await request.getUserList(limit, page).then((response) => {
-                setUserList(response.data.data);
-                limit = setTotalData(response.data.pagination.limit) ? setTotalData(response.data.pagination.limit) : limit
-                page = setTotalData(response.data.pagination.page) ? setTotalData(response.data.pagination.page) : page
-                setTotalData(response.data.pagination.totalData)
-                setTotalPage(response.data.pagination.totalPage)
-            });
-        } catch (error) {
-            console.log('Error getUsers: ' + error.message);
-        }
+    const getUserList = async (limit, page, search) => {
+        await request.getUserList(limit, page, search).then((response) => {
+            setUserList(response.data.data);
+            limit = setTotalData(response.data.pagination.limit) ? setTotalData(response.data.pagination.limit) : limit
+            page = setTotalData(response.data.pagination.page) ? setTotalData(response.data.pagination.page) : page
+            setTotalData(response.data.pagination.totalData)
+            setTotalPage(response.data.pagination.totalPage)
+        }).catch(error => {
+            console.log('Error getUserList: ' + error.message);
+        });
     };
     useEffect(() => {
-        getUsers(limit, page);
-    }, [page]);
+        getUserList(limit, page, search);
+    }, [limit, page, search]);
     return (
         <DefaultLayout>
             <Breadcrumb pageName={'User'}/>

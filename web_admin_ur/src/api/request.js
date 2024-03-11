@@ -1,8 +1,8 @@
 import axiosClient from "./index";
 
 const request = {
-    getPlaces(limit, page) {
-        return axiosClient.get(`/api/place?limit=${limit}&page=${page}`);
+    getPlaceList(limit, page, search) {
+        return axiosClient.get(`/api/place?limit=${limit}&page=${page}&search=${search}`);
     },
     getPlaceById(placeId) {
         return axiosClient.get(`/api/place/${placeId}`);
@@ -19,8 +19,8 @@ const request = {
     getBookingById(bookingId) {
         return axiosClient.get(`/api/booking/${bookingId}`);
     },
-    getUserList(limit, page) {
-        return axiosClient.get(`/api/user?limit=${limit}&page=${page}`);
+    getUserList(limit, page, search) {
+        return axiosClient.get(`/api/user?limit=${limit}&page=${page}&search=${search}`);
     },
     getUserById(userId) {
         return axiosClient.get(`/api/user/${userId}`);

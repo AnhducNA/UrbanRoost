@@ -5,17 +5,21 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAdd, faEdit, faEye, faRemove} from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../../components/Tables/Pagination";
 import request from "../../api/request";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 const PlaceList = () => {
+    // Get Search
+    const location = useLocation();
+    const search = location.search.replace('?search=', '');
+    //  Pagination
     const [placeList, setPlaceList] = useState([]);
     const [totalData, setTotalData] = useState()
     const [totalPage, setTotalPage] = useState()
     const [page, setPage] = useState(1);
     const limit = 5;
-    const getPlaceList = async (limit, page) => {
+    const getPlaceList = async (limit, page, search) => {
         try {
-            await request.getPlaces(limit, page).then((response) => {
+            await request.getPlaceList(limit, page, search).then((response) => {
                 setPlaceList(response.data.data);
                 limit = setTotalData(response.data.pagination.limit) ? setTotalData(response.data.pagination.limit) : limit
                 page = setTotalData(response.data.pagination.page) ? setTotalData(response.data.pagination.page) : page
@@ -27,8 +31,8 @@ const PlaceList = () => {
         }
     };
     useEffect(() => {
-        getPlaceList(limit, page);
-    }, [page]);
+        getPlaceList(limit, page, search);
+    }, [limit, page, search]);
     return (
         <DefaultLayout>
             <Breadcrumb pageName={'Place list'}/>
@@ -112,7 +116,7 @@ const PlaceList = () => {
                             page={page}
                             totalPage={totalPage}
                             totalData={totalData}
-                            onPageChange = {(page) => setPage(page)}
+                            onPageChange={(page) => setPage(page)}
                         />
                         {/*    End Pagination */}
                     </div>

@@ -4,7 +4,7 @@ import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleDown} from "@fortawesome/free-solid-svg-icons";
 import request from "../../api/request";
-import { useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const CreatePlace = () => {
     const navigate = useNavigate();
@@ -16,8 +16,8 @@ const CreatePlace = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const result = await request.createPlace(placeData).then((response) => {
-                if(response.data.success){
+            await request.createPlace(placeData).then((response) => {
+                if (response.data.success) {
                     alert(response.data.data.message);
                     navigate('/admin/place/list');
                 }
@@ -124,6 +124,7 @@ const CreatePlace = () => {
                                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                 ></textarea>
                             </div>
+                            {/* Select group */}
                             <div className="mb-6">
                                 <label className="mb-2.5 block text-black dark:text-white" htmlFor={'state'}>
                                     Select place type
@@ -150,7 +151,6 @@ const CreatePlace = () => {
                                             Hotel
                                         </option>
                                     </select>
-
                                     <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                                             <FontAwesomeIcon icon={faAngleDown} fontSize={24}/>
                                         </span>
