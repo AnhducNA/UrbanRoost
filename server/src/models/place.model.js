@@ -2,14 +2,14 @@ const connection = require('../database');
 
 
 class PlaceModel {
-    static async getPlaces(limit, offset) {
+    static async getPlaceList(limit, offset, search) {
         limit = (limit) ? limit : 10;
         offset = (offset) ? offset : 0;
         return new Promise((resolve, reject) => {
-            connection.query(
+            const query = connection.query(
                 `SELECT place.* FROM place 
-                LIMIT ? OFFSET ?`,
-                [+limit, +offset],
+                WHERE place.title LIKE '%${search}%' OR place.location LIKE '%${search}%'
+                LIMIT ${limit} OFFSET ${offset}`,
                 (err, response) => {
                     if (err) {
                         reject(err);
@@ -40,6 +40,7 @@ class PlaceModel {
             );
         });
     }
+
     static async getRateAboutPlaceId(placeId) {
         return new Promise((resolve, reject) => {
             connection.query(

@@ -6,9 +6,9 @@ const formatDate = (date) =>  {
 module.exports = {
     getUserList: async (req, res) => {
         try {
-            let {limit, page} = (req.query);
+            let {limit, page, search} = (req.query);
             const offset = (page - 1) * limit;
-            const userList = await UserModel.getUserList(limit, offset);
+            const userList = await UserModel.getUserList(limit, offset, search);
             const totalUser = userList.length;
             const totalPage = Math.ceil(totalUser / limit);
             userList.forEach((user) => {

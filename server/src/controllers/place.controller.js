@@ -2,11 +2,11 @@ const Place = require('../models/place.model');
 const db = require('../database');
 
 module.exports = {
-    getPlaces: async (req, res) => {
+    getPlaceList: async (req, res) => {
         try {
-            let {limit, page} = (req.query);
+            let {limit, page, search} = (req.query);
             const offset = (page - 1) * limit;
-            const places = await Place.getPlaces(limit, offset);
+            const places = await Place.getPlaceList(limit, offset, search);
             let totalPlaces = (places && places.length);
             const totalPage = Math.ceil(totalPlaces / limit);
             res.json({

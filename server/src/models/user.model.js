@@ -1,15 +1,15 @@
 const connection = require("../database");
 
 class UserModel {
-    static async getUserList(limit, offset) {
+    static async getUserList(limit, offset, search) {
         limit = (limit) ? limit : 10;
         offset = (offset) ? offset : 0;
         return new Promise((resolve, reject) => {
             connection.query(
                 `SELECT * FROM user
+                WHERE user.name LIKE '%${search}%' OR user.email LIKE '%${search}%'
                 ORDER BY user.id DESC
-                LIMIT ? OFFSET ? `,
-                [+limit, +offset],
+                LIMIT ${limit} OFFSET ${offset}`,
                 (err, response) => {
                     if (err) {
                         reject(err);
