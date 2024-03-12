@@ -1,8 +1,8 @@
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import HomeTabs from "./src/pages/HomeTabs";
-import PlaceDetailScreen from "./src/pages/Place/PlaceDetail";
-import AdvancedSearch from "./src/pages/AdvancedSearchScreen";
+import PlaceDetail from "./src/pages/Place/PlaceDetail";
+import AdvancedSearch from "./src/pages/AdvancedSearchPage";
 import {Provider} from "react-redux";
 import {store} from "./src/store/store";
 import React, {useEffect, useState} from "react";
@@ -10,6 +10,7 @@ import {Appearance} from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import {getData, storeData} from "./src/config/asyncStorage";
 import {ThemeContext} from "./src/context/ThemeContext";
+import PlaceList from "./src/pages/Place/PlaceList";
 
 const RootStack = createStackNavigator();
 //creating simple splash screen
@@ -68,7 +69,8 @@ export default function App() {
                     <RootStack.Navigator screenOptions={{headerShown: false}}>
                         <RootStack.Group>
                             <RootStack.Screen name="HomeTabs" component={HomeTabs}/>
-                            <RootStack.Screen name="PlaceDetail" component={PlaceDetailScreen}/>
+                            <RootStack.Screen name="PlaceList" component={PlaceList}/>
+                            <RootStack.Screen name="PlaceDetail" component={PlaceDetail}/>
                         </RootStack.Group>
                         <RootStack.Group screenOptions={{presentation: 'modal'}}>
                             <RootStack.Screen name="AdvancedSearch" component={AdvancedSearch}/>

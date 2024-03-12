@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {ThemeContext} from "../context/ThemeContext";
 import {colors} from "../config/theme";
-import AdvancedSearchScreen from "./AdvancedSearchScreen";
+import AdvancedSearchPage from "./AdvancedSearchPage";
 
 const Tab = createBottomTabNavigator();
 const HomeTabs = () => {
@@ -80,7 +80,7 @@ const HomeTabs = () => {
             })}
         >
             <Tab.Screen name="Home" component={PlaceList}/>
-            <Tab.Screen name="Search" component={AdvancedSearchScreen}/>
+            <Tab.Screen name="Search" component={AdvancedSearchPage}/>
             <Tab.Screen name="Wishlists" component={WishlistsScreen}/>
             <Tab.Screen name="Inbox" component={InboxScreen}/>
             <Tab.Screen name="Profile" component={ProfileScreen}/>

@@ -34,15 +34,9 @@ const PlaceCategory = (
                         }}
                     >
                         <Text
-                            className={`w-4 h-4 opacity-75 ${
-                                categoryIndex === categoryItem.id ? "opacity-100" : "opacity-20"
-                            }`}
-                            style={{color: activeColors.primary, }}
-                        >{categoryItem.icon}</Text>
-                        <Text
                             className={
                                 categoryIndex === categoryItem.id
-                                    ? "text-black"
+                                    ? "font-bold"
                                     : "text-gray-600"
                             }
                             style={{color: activeColors.text}}

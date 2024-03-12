@@ -1,11 +1,6 @@
-import React, {useContext} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
-import {
-    faLocationDot,
-} from "@fortawesome/free-solid-svg-icons";
+import React, {useContext, useEffect, useState} from 'react';
+import {Button, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/native";
-import {SearchBar, Button} from '@rneui/themed';
 import {ThemeContext} from "../../context/ThemeContext";
 import {colors} from "../../config/theme";
 
@@ -13,26 +8,31 @@ const SearchComponent = () => {
     // get Theme
     const {theme} = useContext(ThemeContext);
     const activeColors = colors[theme.mode];
+    // navigation
     const navigation = useNavigation();
+    // search
+    const [searchData, setSearchData] =
+        useState({'search_type': 'search_place', 'search_text': ''});
     return (
         <View style={[styles.container, {backgroundColor: '#fff'}]}>
-            <Text style={[styles.search_label, {color: '#616161'}]}>
-                Find a room anywhere
-            </Text>
-            <SearchBar
-                placeholder={"Enter an address or city"}
-                platform="android"
-                searchIcon={<FontAwesomeIcon icon={faLocationDot} size={20} color={activeColors.primary}/>}
-                containerStyle={{borderRadius: 5, backgroundColor: '#F7F7F7'}}
-                inputStyle={{fontSize: 16}}
-            />
-
-            <Button title={'Search Now'}
-                    color={activeColors.primary}
-                    buttonStyle={{marginTop: 9}}
-                    onPress={() => {
-                        navigation.navigate('AdvancedSearch')
-                    }}
+            <TextInput
+                className={"px-3 py-2 mb-2 bg-gray-200 rounded"}
+                placeholder={"Search an address or city"}
+                onChangeText={(value) => {
+                    const newSearchData = {...searchData, ['search_text']: value};
+                    setSearchData(newSearchData)
+                }}
+            >
+            </TextInput>
+            <Button
+                title={'Search Now'}
+                color={activeColors.primary}
+                onPress={() => {
+                    alert('Search for: ' + searchData.search_text);
+                    navigation.navigate('PlaceList', {
+                        search: searchData.search_text,
+                    });
+                }}
             />
 
             <TouchableOpacity
@@ -40,7 +40,7 @@ const SearchComponent = () => {
                     navigation.navigate('AdvancedSearch')
                 }}
             >
-                <Text style={[styles.search_advanced, {color: activeColors.text}]}>Advanced Search</Text>
+                <Text style={[styles.search_advanced]} className="text-blue-700 underline">Advanced Search</Text>
             </TouchableOpacity>
         </View>
     );
@@ -51,13 +51,6 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         paddingBottom: 20,
         borderRadius: 8,
-    },
-    search_label: {
-        marginLeft: 18.5,
-        marginBottom: 8,
-        fontSize: 18,
-        fontStyle: "normal",
-        fontWeight: 700,
     },
     search_advanced: {
         marginTop: 8,
