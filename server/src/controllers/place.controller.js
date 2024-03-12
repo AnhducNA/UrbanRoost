@@ -22,6 +22,26 @@ module.exports = {
             res.status(500).json({message: err.message});
         }
     },
+    getPlaceListBySearchAdvanced: async (req, res) => {
+        try {
+            let {limit, page, search, search_place_category} = (req.query);
+            const offset = (page - 1) * limit;
+            const places = await Place.getPlaceList(limit, offset, search, search_place_category);
+            let totalPlaces = (places && places.length);
+            const totalPage = Math.ceil(totalPlaces / limit);
+            res.json({
+                data: places,
+                pagination: {
+                    limit: +limit,
+                    page: +page,
+                    totalPage: +totalPage,
+                    totalData: +totalPlaces
+                }
+            });
+        } catch (err) {
+            res.status(500).json({message: err.message});
+        }
+    },
     getPlaceById: async (req, res) => {
         const placeId = req.params.placeId;
         try {

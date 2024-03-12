@@ -22,6 +22,30 @@ class PlaceModel {
         });
     }
 
+    static async getPlaceListBySearchAdvanced(limit, offset, search, search_place_category) {
+        limit = (limit) ? limit : 10;
+        offset = (offset) ? offset : 0;
+        console.log(limit)
+        return new Promise((resolve, reject) => {
+            const query = connection.query(
+                `SELECT place.* FROM place 
+                JOIN place_category on place.id = place_category.place_id
+                WHERE place.title LIKE '%${search}%' 
+                OR place.location LIKE '%${search}%' 
+                OR place_category.category_id = ${search_place_category}
+                LIMIT ${limit} OFFSET ${offset}`,
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        console.log(err.message, err.sql)
+                        return;
+                    }
+                    resolve(response);
+                }
+            );
+        });
+    }
+
     static async getPlaceById(placeId) {
         return new Promise((resolve, reject) => {
             connection.query(
