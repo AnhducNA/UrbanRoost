@@ -8,12 +8,14 @@ import SwitchDarkMode from "../components/SwitchDarkMode";
 import accountSettingsListData from "../data/accountSettingListData";
 import {ThemeContext} from "../context/ThemeContext";
 import {colors} from "../config/theme";
+import {useNavigation} from "@react-navigation/native";
 
 const ProfileScreen = () => {
     const accountSettingsList = accountSettingsListData;
     const [isSystemTheme, setIsSystemTheme] = useState(true);
     const {theme} = useContext(ThemeContext);
     const activeColors = colors[theme.mode];
+    const navigation = useNavigation();
     return (
         <>
             <ScrollView
@@ -62,20 +64,20 @@ const ProfileScreen = () => {
                 {/* Settings */}
                 <View className="py-10 space-y-3">
                     {/*Login*/}
-                    {/*
                     <Text className="text-lg text-gray-500">
                         Log in start planning your next up
                     </Text>
                     <View className="mt-5">
                         <Button
-                            // onPress={onPressLearnMore}
-                            title="Log In"
+                            onPress={() => {
+                                navigation.navigate('Login');
+                            }}
+                            title="Đăng nhập"
                             color="#F24B5B"
                             accessibilityLabel="Log In for Trip your way"
                         />
                     </View>
                     <Text>Don't have account ? Sign Up</Text>
-                    */}
                     <View>
                         <Text className="font-bold text-xl" style={{color: activeColors.text}}>Theme Setting</Text>
                         <View

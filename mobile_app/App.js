@@ -11,6 +11,9 @@ import * as SplashScreen from "expo-splash-screen";
 import {getData, storeData} from "./src/config/asyncStorage";
 import {ThemeContext} from "./src/context/ThemeContext";
 import PlaceList from "./src/pages/Place/PlaceList";
+import LoginPage from "./src/pages/Authentication/LoginPage";
+import RegisterPage from "./src/pages/Authentication/RegisterPage";
+import ForgotPasswordPage from "./src/pages/Authentication/ForgotPasswordPage";
 
 const RootStack = createStackNavigator();
 //creating simple splash screen
@@ -66,7 +69,10 @@ export default function App() {
         <Provider store={store}>
             <ThemeContext.Provider value={{theme, updateTheme}}>
                 <NavigationContainer>
-                    <RootStack.Navigator screenOptions={{headerShown: false}}>
+                    <RootStack.Navigator
+                        initialRouteName='Login'
+                        screenOptions={{headerShown: false}}
+                    >
                         <RootStack.Group>
                             <RootStack.Screen name="HomeTabs" component={HomeTabs}/>
                             <RootStack.Screen name="PlaceList" component={PlaceList}/>
@@ -74,6 +80,11 @@ export default function App() {
                         </RootStack.Group>
                         <RootStack.Group screenOptions={{presentation: 'modal'}}>
                             <RootStack.Screen name="AdvancedSearch" component={AdvancedSearch}/>
+                        </RootStack.Group>
+                        <RootStack.Group >
+                            <RootStack.Screen name="Login" component={LoginPage}/>
+                            <RootStack.Screen name="Register" component={RegisterPage}/>
+                            <RootStack.Screen name="ForgotPassword" component={ForgotPasswordPage}/>
                         </RootStack.Group>
                     </RootStack.Navigator>
                 </NavigationContainer>

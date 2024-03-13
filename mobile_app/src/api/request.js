@@ -13,6 +13,15 @@ const request = {
     getCategoryList(limit, page) {
         return axiosClient.get(`/api/category/?limit=${limit}&page=${page}`);
     },
+    authLogin(user){
+        return axiosClient.post(`api/auth/login`, user);
+    },
+    authRegister(user){
+        return axiosClient.post(`api/auth/register`, user);
+    },
+    authForgotPassword(data){
+        return axiosClient.post(`api/auth/forgotPassword`, data);
+    }
 };
 
 export default request;
