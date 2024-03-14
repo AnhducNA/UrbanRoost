@@ -5,7 +5,7 @@ import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope, faLock} from "@fortawesome/free-solid-svg-icons";
 import request from "../../api/request";
-import {validateEmail} from "../../utils/regex";
+import {validateEmail} from "../../utils";
 
 const Login = () => {
     const navigate = useNavigate();

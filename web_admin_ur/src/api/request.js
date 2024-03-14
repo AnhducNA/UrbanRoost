@@ -22,6 +22,9 @@ const request = {
     createPlace(place) {
         return axiosClient.post(`/api/place`, place);
     },
+    placeUpdate(dataUpdate) {
+        return axiosClient.put(`/api/place/update`, dataUpdate);
+    },
     getBookings(limit, page) {
         return axiosClient.get(`/api/booking?limit=${limit}&page=${page}`);
     },

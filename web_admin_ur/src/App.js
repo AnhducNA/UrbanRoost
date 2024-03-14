@@ -4,7 +4,7 @@ import React from "react";
 import Login from "./pages/Authentication/Login";
 import Register from "./pages/Authentication/Register";
 import PlaceList from "./pages/Place/PlaceList";
-import CreatePlace from "./pages/Place/CreatePlace";
+import PlaceStore from "./pages/Place/PlaceStore";
 import BookingList from "./pages/Booking/BookingList";
 import DetailPlace from "./pages/Place/DetailPlace";
 import DetailBooking from "./pages/Booking/DetailBooking";
@@ -24,7 +24,8 @@ function App() {
                         <Route path={'/admin/dashboard'} element={<AdminScreen/>} index={true}></Route>
                         <Route path={'/admin/place/list'} element={<PlaceList/>}></Route>
                         <Route path={'/admin/place/:idPlace'} element={<DetailPlace/>}></Route>
-                        <Route path={'/admin/place/new'} element={<CreatePlace/>}></Route>
+                        <Route path={'/admin/place/:idPlace/Update'} element={<PlaceStore/>}></Route>
+                        <Route path={'/admin/place/new'} element={<PlaceStore/>}></Route>
                         <Route path={'/admin/booking/list'} element={<BookingList/>}></Route>
                         <Route path={'/admin/booking/:bookingId'} element={<DetailBooking/>}></Route>
                         <Route path={'/admin/user/list'} element={<UserList/>}></Route>

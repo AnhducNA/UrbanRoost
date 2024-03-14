@@ -5,9 +5,10 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAdd, faEdit, faEye, faRemove} from "@fortawesome/free-solid-svg-icons";
 import Pagination from "../../components/Tables/Pagination";
 import request from "../../api/request";
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 
 const PlaceList = () => {
+    const navigate = useNavigate();
     // Get Search
     const location = useLocation();
     const search = location.search.replace('?search=', '');
@@ -96,7 +97,11 @@ const PlaceList = () => {
                                                     className="hover:text-primary">
                                                     <FontAwesomeIcon icon={faEye} fontSize={18}/>
                                                 </Link>
-                                                <button className="hover:text-primary">
+                                                <button className="hover:text-primary"
+                                                        onClick={() => {
+                                                            navigate(`/admin/place/${placeItem.id}/update`);
+                                                        }}
+                                                >
                                                     <FontAwesomeIcon icon={faEdit} fontSize={18}/>
                                                 </button>
                                                 <button className="hover:text-primary">

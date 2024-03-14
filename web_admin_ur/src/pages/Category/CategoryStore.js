@@ -60,10 +60,15 @@ const CategoryStore = () => {
     }, []);
     return (
         <DefaultLayout>
-            <Breadcrumb pageName={'New Category'}/>
+            <Breadcrumb pageName={categoryId ? 'Update Category' : 'New Category'}/>
             {/* <!-- Contact Form --> */}
             <div
                 className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
+                    <h3 className="font-medium text-black dark:text-white">
+                        {categoryId ? 'Category ' + categoryId : 'New Category'}
+                    </h3>
+                </div>
                 <form action="#"
                       method='post'
                       onSubmit={handleSubmit}

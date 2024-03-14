@@ -14,7 +14,7 @@ const DetailPlace = () => {
     const getPlaceById = async (idPlace) => {
         try {
             await request.getPlaceById(idPlace).then((response) => {
-                setPlace(response.data[0])
+                setPlace(response.data.data[0])
             });
         } catch (e) {
             console.log('Error getPlaceById: ' + e.message)

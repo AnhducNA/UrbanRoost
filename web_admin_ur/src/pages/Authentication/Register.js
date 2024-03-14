@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import DefaultLayout from "../../layout/DefaultLayout";
 import Breadcrumb from "../../components/Breadcrumbs/Breadcrumb";
 import {Link, useNavigate} from "react-router-dom";
-import {validateEmail} from "../../utils/regex";
+import {validateEmail} from "../../utils";
 import request from "../../api/request";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope, faListNumeric, faPhoneAlt, faUser, faUserLock} from "@fortawesome/free-solid-svg-icons";
