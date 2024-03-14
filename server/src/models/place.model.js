@@ -22,6 +22,22 @@ class PlaceModel {
         });
     }
 
+    static async getPlaceCount() {
+        return new Promise((resolve, reject) => {
+            const query = connection.query(
+                `SELECT count(*) as count FROM place`,
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        console.log(err.message, err.sql)
+                        return;
+                    }
+                    resolve(response);
+                }
+            );
+        });
+    }
+
     static async getPlaceListBySearchAdvanced(limit, offset, search, search_place_category) {
         limit = (limit) ? limit : 10;
         offset = (offset) ? offset : 0;
@@ -81,9 +97,9 @@ class PlaceModel {
                 }
             );
         });
-    }
+    };
 
-    static async createPlace(title) {
+    static async placeNew(title) {
         return new Promise((resolve, reject) => {
             const sql = `INSERT INTO place (title) VALUES(?)`;
             connection.query(
@@ -98,8 +114,105 @@ class PlaceModel {
                 }
             )
         });
-    }
+    };
 
+    static async placeUpdate(
+        id,
+        title,
+        description,
+        location,
+        price,
+        state,
+    ) {
+        return new Promise((resolve, reject) => {
+            const sql = `UPDATE place SET title = '${title}', description = '${description}', location = '${location}', price = '${price}', state = '${state}' WHERE id = ${id}`;
+            connection.query(
+                sql,
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        throw err;
+                    }
+                    resolve(response);
+                }
+            )
+        });
+    };
+
+    static async deletePlaceCategoryByPlaceId(
+        place_id
+    ) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                `DELETE FROM place_category WHERE place_category.place_id = ?`,
+                [place_id],
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        throw err;
+                    }
+                    resolve(response);
+                }
+            )
+        });
+    };
+
+    static async newPlaceCategory(
+        place_id,
+        category_id
+    ) {
+        return new Promise((resolve, reject) => {
+            const sql = `INSERT INTO place_category (place_id, category_id)  VALUES(?, ?)`;
+            connection.query(
+                sql,
+                [place_id, category_id],
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        throw err;
+                    }
+                    resolve(response);
+                }
+            )
+        });
+    };
+
+    static async deleteImageByPlaceId(
+        place_id
+    ) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                `DELETE FROM image WHERE image.place_id = ?`,
+                [place_id],
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        throw err;
+                    }
+                    resolve(response);
+                }
+            )
+        });
+    };
+
+    static async newImage(
+        image, place_id
+    ) {
+        return new Promise((resolve, reject) => {
+            const sql = `INSERT INTO image (image, place_id)  VALUES(?, ?)`;
+            connection.query(
+                sql,
+                [image, place_id],
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        throw err;
+                    }
+                    resolve(response);
+                }
+            )
+        });
+    };
 }
 
 module.exports = PlaceModel;

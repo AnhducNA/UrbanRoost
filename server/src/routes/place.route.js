@@ -6,5 +6,6 @@ router.get('/', placesController.getPlaceList);
 router.get('/search_advanced', placesController.getPlaceListBySearchAdvanced);
 router.get('/:placeId', placesController.getPlaceById);
 router.get('/:placeId/rate', placesController.getRateAboutPlaceId);
-router.post('/', placesController.createPlace);
+router.post('/', placesController.placeNew);
+router.put('/update', placesController.placeUpdate);
 module.exports = router

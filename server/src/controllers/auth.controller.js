@@ -60,7 +60,7 @@ module.exports = {
             } else {
                 return res.json({
                     success: true,
-                    message: 'Xác thực khẩu thành công',
+                    message: 'Xác thực mật khẩu thành công',
                 })
             }
         } catch (err) {

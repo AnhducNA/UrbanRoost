@@ -19,7 +19,7 @@ const RegisterPage = () => {
     const handleRegister = async () => {
         // Check email
         if (!isValidEmail(data.email)) {
-            alert('Email không đúng định dạng', ToastAndroid.SHORT);
+            alert('Email không đúng định dạng');
             return;
         }
         // Check password
