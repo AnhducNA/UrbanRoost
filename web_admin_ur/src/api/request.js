@@ -1,6 +1,15 @@
 import axiosClient from "./index";
 
 const request = {
+    authLogin(user){
+        return axiosClient.post(`api/auth/login`, user);
+    },
+    authRegister(user){
+        return axiosClient.post(`api/auth/register`, user);
+    },
+    authForgotPassword(data){
+        return axiosClient.post(`api/auth/forgotPassword`, data);
+    },
     getPlaceList(limit, page, search) {
         return axiosClient.get(`/api/place?limit=${limit}&page=${page}&search=${search}`);
     },
