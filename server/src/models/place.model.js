@@ -7,7 +7,9 @@ class PlaceModel {
         offset = (offset) ? offset : 0;
         return new Promise((resolve, reject) => {
             const query = connection.query(
-                `SELECT place.* FROM place 
+                `SELECT place.*, user.name as user_name, user.avatar as user_avatar 
+                FROM place 
+                JOIN user ON place.user_id = user.id
                 WHERE place.title LIKE '%${search}%' OR place.location LIKE '%${search}%'
                 LIMIT ${limit} OFFSET ${offset}`,
                 (err, response) => {
@@ -41,10 +43,11 @@ class PlaceModel {
     static async getPlaceListBySearchAdvanced(limit, offset, search, search_place_category) {
         limit = (limit) ? limit : 10;
         offset = (offset) ? offset : 0;
-        console.log(limit)
         return new Promise((resolve, reject) => {
             const query = connection.query(
-                `SELECT place.* FROM place 
+                `SELECT place.* , user.name as user_name, user.avatar as user_avatar 
+                FROM place 
+                JOIN user ON place.user_id = user.id
                 JOIN place_category on place.id = place_category.place_id
                 WHERE place.title LIKE '%${search}%' 
                 OR place.location LIKE '%${search}%' 
@@ -86,6 +89,41 @@ class PlaceModel {
             connection.query(
                 `SELECT * FROM rate
                 WHERE rate.place_id = ? `,
+                placeId,
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        console.log(err.message, err.sql)
+                        return;
+                    }
+                    resolve(response);
+                }
+            );
+        });
+    };
+    static async getImageByPlaceId(placeId) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                `SELECT * FROM image
+                WHERE image.place_id = ? `,
+                placeId,
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        console.log(err.message, err.sql)
+                        return;
+                    }
+                    resolve(response);
+                }
+            );
+        });
+    };
+    static async getCategoryByPlaceId(placeId) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                `SELECT category.* FROM category
+                JOIN place_category ON place_category.category_id = category.id
+                WHERE place_category.place_id = ? `,
                 placeId,
                 (err, response) => {
                     if (err) {

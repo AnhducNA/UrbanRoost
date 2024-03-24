@@ -71,6 +71,30 @@ module.exports = {
             res.status(500).json({message: err.message});
         }
     },
+    getImageByPlaceId: async (req, res) => {
+        const placeId = req.params.placeId;
+        try {
+            const imageList = await PlaceModel.getImageByPlaceId(placeId);
+
+            res.json({
+                data: imageList
+            });
+        } catch (err) {
+            res.status(500).json({message: err.message});
+        }
+    },
+    getCategoryByPlaceId: async (req, res) => {
+        const placeId = req.params.placeId;
+        try {
+            const categoryList = await PlaceModel.getCategoryByPlaceId(placeId);
+
+            res.json({
+                data: categoryList
+            });
+        } catch (err) {
+            res.status(500).json({message: err.message});
+        }
+    },
     placeNew: async (req, res) => {
         const {
             title,
