@@ -11,6 +11,7 @@ import {
 import {useNavigation} from "@react-navigation/native";
 import {isValidEmail} from "../../utils";
 import request from "../../api/request";
+import {storeData} from "../../config/asyncStorage";
 
 const LoginScreen = () => {
     // navigation
@@ -32,9 +33,13 @@ const LoginScreen = () => {
         await request.authLogin(data)
             .then(response => {
                 alert(response.data.message);
-                if (response?.data?.success === true) {
-                    navigation.navigate('HomeTabs');
+                if (response?.data?.success === false) {
+                    return;
                 }
+                // login success
+                storeData('accessToken', response.data.accessToken);
+                storeData('accessUser', response.data.accessUser)
+                // navigation.navigate('HomeTabs');
             })
             .catch(error => {
                 console.log('Error Login' + error.message);
@@ -44,9 +49,9 @@ const LoginScreen = () => {
         <SafeAreaView className={'w-full h-full bg-emerald-500'}>
             <View className={'px-5 mt-10 flex items-center justify-center'}>
                 <TouchableOpacity
-                onPress={() => {
-                    navigation.navigate('HomeTabs')
-                }}>
+                    onPress={() => {
+                        navigation.navigate('HomeTabs')
+                    }}>
                     <Text className={'text-4xl font-bold mb-10 text-yellow-300'}>
                         Đăng nhập
                     </Text>

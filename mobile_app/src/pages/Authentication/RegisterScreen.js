@@ -36,7 +36,7 @@ const RegisterScreen = () => {
             .then(response => {
                 alert(response.data.message);
                 if (response?.data?.success === true) {
-                    navigation.navigate('HomeTabs');
+                    navigation.navigate('Login');
                 }
             })
     }

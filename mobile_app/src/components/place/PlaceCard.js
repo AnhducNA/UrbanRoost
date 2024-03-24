@@ -1,10 +1,8 @@
 import React, {useContext} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
-import {faHeart, faLocationDot, faStar} from "@fortawesome/free-solid-svg-icons";
+import {faLocationDot, faStar} from "@fortawesome/free-solid-svg-icons";
 import {useNavigation} from "@react-navigation/native";
-import {useDispatch} from "react-redux";
-import {addWishlistPlace} from "../../features/wishlistSlice";
 import {ThemeContext} from "../../context/ThemeContext";
 import {colors} from "../../config/theme";
 
@@ -15,11 +13,10 @@ function PlaceCard(
         description,
         image,
         location,
-        star,
         price,
         state,
         user_name,
-        user_avatar
+        user_avatar,
     }
 ) {
     // get router
@@ -28,7 +25,6 @@ function PlaceCard(
     const {theme} = useContext(ThemeContext);
     const activeColors = colors[theme.mode];
 
-    const dispatch = useDispatch();
     return (
         <TouchableOpacity
             style={[styles.wrapper, {backgroundColor: '#fff'}]}
@@ -39,7 +35,6 @@ function PlaceCard(
                     description,
                     image,
                     location,
-                    star,
                     price,
                     state,
                     user_name,
@@ -51,14 +46,6 @@ function PlaceCard(
                 source={{uri: image}}
                 style={{height: 150, resizeMode: 'stretch'}}
             />
-            <TouchableOpacity
-                style={{padding: 10, position: 'absolute', top: 0, right: 0}}
-                onPress={() => {
-                    dispatch(addWishlistPlace({title, star, image, price}))
-                }}
-            >
-                <FontAwesomeIcon icon={faHeart} size={25} color={'gray'}/>
-            </TouchableOpacity>
             <View style={styles.card_body}>
                 <View style={{
                     display: 'flex',
@@ -72,14 +59,13 @@ function PlaceCard(
                     >
                         {title}
                     </Text>
-                    <TouchableOpacity style={[styles.flex_row, {
+                    <View style={[styles.flex_row, {
                         backgroundColor: activeColors.background_button,
                         padding: 3,
                         borderRadius: 5
                     }]}>
-                        <Text style={{marginRight: 3, color: '#fff', fontSize: 12}}>{star}</Text>
                         <FontAwesomeIcon icon={faStar} size={10} color={'#fff'}/>
-                    </TouchableOpacity>
+                    </View>
                 </View>
                 <Text
                     numberOfLines={2}
@@ -88,12 +74,9 @@ function PlaceCard(
                 <Text className="text-gray-600"
                       style={[styles.card_body.price, {color: activeColors.primary, width: '92%'}]}
                 >{price}</Text>
-                <View style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center'
-                }}>
+                <View
+                    className={'mt-2 flex-row justify-between items-center'}
+                >
                     <View style={styles.flex_row}>
                         <FontAwesomeIcon icon={faLocationDot} size={13} color={activeColors.primary}/>
                         <Text style={{fontSize: 13, marginLeft: 10}}>1.2km from HaNoi</Text>
