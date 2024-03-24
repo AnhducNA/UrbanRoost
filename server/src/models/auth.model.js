@@ -4,7 +4,7 @@ class AuthModel {
     static async getUserByEmailAndPassword(email, password) {
         return new Promise((resolve, reject) => {
             connection.query (
-                `SELECT * FROM user 
+                `SELECT user.id, user.name, user.email FROM user 
                 WHERE user.email = ? AND user.password= ?`,
                 [email, password],
                 (err, response) => {

@@ -1,4 +1,6 @@
 const AuthModel = require('../models/auth.model');
+const jsonwebtoken = require('jsonwebtoken');
+require('dotenv').config();
 
 module.exports = {
     authLogin: async (req, res, next) => {
@@ -11,11 +13,23 @@ module.exports = {
                     success: false,
                     message: 'Đăng nhập thất bại'
                 });
+                return;
             } else if (user?.id) {
+                const token = jsonwebtoken.sign(
+                    {
+                        userId: user.id,
+                        userEmail: user.email
+                    },
+                    process.env.TOKEN_SECRET,
+                    {expiresIn: '24h'}
+                )
                 res.json({
                     success: true,
-                    message: 'Đăng nhập thành công'
+                    message: 'Đăng nhập thành công',
+                    accessToken: token,
+                    accessUser: user.id
                 });
+                return;
             }
         } catch (err) {
             res.status(500).json({message: err.message});

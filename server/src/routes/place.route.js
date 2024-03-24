@@ -4,6 +4,7 @@ const placesController = require("../controllers/place.controller");
 
 router.get('/', placesController.getPlaceList);
 router.get('/search_advanced', placesController.getPlaceListBySearchAdvanced);
+router.get('/favorite/user/:userId', placesController.getFavoritePlaceByUserid);
 router.get('/:placeId', placesController.getPlaceById);
 router.get('/:placeId/rate', placesController.getRateAboutPlaceId);
 router.get('/:placeId/image', placesController.getImageByPlaceId);

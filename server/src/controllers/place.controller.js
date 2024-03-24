@@ -1,5 +1,7 @@
 const PlaceModel = require('../models/place.model');
-const CategoryModel = require("../models/category.model");
+const formatDate = (date) =>  {
+    return (date) ? date.toLocaleDateString("vn-VN") : date
+};
 
 module.exports = {
     getPlaceList: async (req, res) => {
@@ -43,6 +45,22 @@ module.exports = {
             res.status(500).json({message: err.message});
         }
     },
+    getFavoritePlaceByUserid: async (req, res) => {
+        try {
+            let userId = (req.params.userId);
+            const placeList = await PlaceModel.getFavoritePlaceByUserid(userId);
+            let totalPlaces = await PlaceModel.getPlaceCount();
+            totalPlaces = totalPlaces[0].count;
+            res.json({
+                data: placeList,
+                pagination: {
+                    totalData: +totalPlaces
+                }
+            });
+        } catch (err) {
+            res.status(500).json({message: err.message});
+        }
+    },
     getPlaceById: async (req, res) => {
         const placeId = req.params.placeId;
         try {
@@ -59,12 +77,15 @@ module.exports = {
         try {
             const rateList = await PlaceModel.getRateAboutPlaceId(placeId);
             let rateTotal = 0;
-            (rateList && rateList.map(rateItem => {
-                rateTotal += parseInt(rateItem.star);
+            (rateList && rateList.map(rate => {
+                rateTotal += parseInt(rate.star);
+                rate.created_at = formatDate(rate.created_at)
+                rate.updated_at = formatDate(rate.updated_at)
             }))
             const rateAverage = (rateTotal / rateList.length).toFixed(1);
             res.json({
                 data: rateList,
+                totalRate: rateList.length,
                 rateAverage: rateAverage,
             });
         } catch (err) {

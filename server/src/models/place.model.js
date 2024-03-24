@@ -63,8 +63,27 @@ class PlaceModel {
                 }
             );
         });
-    }
+    };
 
+    static async getFavoritePlaceByUserid(userId) {
+        return new Promise((resolve, reject) => {
+            const query = connection.query(
+                `SELECT place.*, user.name as user_name, user.avatar as user_avatar
+                FROM place 
+                JOIN user ON place.user_id = user.id
+                JOIN favorite_place_user ON favorite_place_user.place_id = place.id
+                WHERE favorite_place_user.user_id = ${userId}`,
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        console.log(err.message, err.sql)
+                        return;
+                    }
+                    resolve(response);
+                }
+            );
+        });
+    };
     static async getPlaceById(placeId) {
         return new Promise((resolve, reject) => {
             connection.query(
