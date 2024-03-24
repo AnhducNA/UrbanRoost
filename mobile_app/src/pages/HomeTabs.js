@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import PlaceList from "./Place/PlaceList";
-import WishlistsScreen from "./WishlistsScreen";
+import PlaceListScreen from "./Place/PlaceListScreen";
 import InboxScreen from "./InboxScreen";
 import ProfileScreen from "./ProfileScreen";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
@@ -14,6 +13,7 @@ import {
 import {ThemeContext} from "../context/ThemeContext";
 import {colors} from "../config/theme";
 import AdvancedSearchPage from "./AdvancedSearchPage";
+import PlaceFavoriteScreen from "./Place/PlaceFavoriteScreen";
 
 const Tab = createBottomTabNavigator();
 const HomeTabs = () => {
@@ -51,7 +51,7 @@ const HomeTabs = () => {
                                              size={iconSize}
                             />
                         )
-                    } else if (route.name === "Wishlists") {
+                    } else if (route.name === "Favorite") {
                         return (
                             <FontAwesomeIcon icon={faHeart}
                                              color={colorName}
@@ -79,9 +79,9 @@ const HomeTabs = () => {
                 },
             })}
         >
-            <Tab.Screen name="Home" component={PlaceList}/>
+            <Tab.Screen name="Home" component={PlaceListScreen}/>
             <Tab.Screen name="Search" component={AdvancedSearchPage}/>
-            <Tab.Screen name="Wishlists" component={WishlistsScreen}/>
+            <Tab.Screen name="Favorite" component={PlaceFavoriteScreen}/>
             <Tab.Screen name="Inbox" component={InboxScreen}/>
             <Tab.Screen name="Profile" component={ProfileScreen}/>
         </Tab.Navigator>

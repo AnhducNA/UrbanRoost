@@ -10,11 +10,17 @@ import {
 import React, {useContext, useEffect, useState} from "react";
 import request from "../../api/request";
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
-import {faAngleLeft, faCircle, faHome, faLocationDot, faStar} from "@fortawesome/free-solid-svg-icons";
+import {
+    faAngleLeft,
+    faHome,
+    faLocationDot,
+    faStar,
+    faUser
+} from "@fortawesome/free-solid-svg-icons";
 import {ThemeContext} from "../../context/ThemeContext";
 import {colors} from "../../config/theme";
 
-const PlaceDetail = ({route, navigation}) => {
+const PlaceDetailScreen = ({route, navigation}) => {
     // get Theme
     const {theme} = useContext(ThemeContext);
     const activeColors = colors[theme.mode];
@@ -22,36 +28,41 @@ const PlaceDetail = ({route, navigation}) => {
         placeId,
         title,
         description,
-        image,
         location,
         star,
         price,
-        type_place,
-        latitude,
-        longitude,
-        state
+        state,
+        user_name,
+        user_avatar
     } = route.params;
-    const [placeData, setPlaceData] = useState([]);
     const [ownRoomData, setOwnRoomData] = useState([]);
-    const getPlaceById = async (id) => {
-        try {
-            await request.getPlaceById(id).then(response => {
-                setPlaceData(response.data);
+    // Image by placeId
+    const [imageByPlaceId, setImageByPlaceId] = useState([]);
+    // Category by placeId
+    const [categoryByPlaceId, setCategoryByPlaceId] = useState([]);
+
+    const getImageByPlaceId = async (placeId) => {
+        await request.getImageByPlaceId(placeId)
+            .then((response) => {
+                setImageByPlaceId(response.data.data);
             })
-        } catch (e) {
-            console.log('Error getPlaceById: ' + e.message);
-        }
+            .catch(error => {
+                console.log('Error getPlaceList: ' + error.message);
+            });
     }
-    const getOwnRoomByIdPlace = async (id) => {
-        try {
-            setOwnRoomData({'image': 'https://randomuser.me/api/portraits/men/36.jpg'})
-        } catch (e) {
-            console.log('Error getOwnRoomByIdPlace: ' + e.message);
-        }
+    const getCategoryByPlaceId = async (placeId) => {
+        await request.getCategoryByPlaceId(placeId)
+            .then((response) => {
+                setCategoryByPlaceId(response.data.data);
+            })
+            .catch(error => {
+                console.log('Error getPlaceList: ' + error.message);
+            });
     }
+
     useEffect(() => {
-        getPlaceById(placeId);
-        getOwnRoomByIdPlace(placeId);
+        getImageByPlaceId(placeId);
+        getCategoryByPlaceId(placeId)
     }, []);
     return (
         <SafeAreaView style={styles.container}>
@@ -59,16 +70,17 @@ const PlaceDetail = ({route, navigation}) => {
                 <View
                     style={styles.flex_row}
                 >
-                    <TouchableOpacity style={{padding: 10}}
-                                      onPress={() => {
-                                          navigation.goBack();
-                                      }}
+                    <TouchableOpacity
+                        style={{padding: 10}}
+                        onPress={() => {
+                            navigation.goBack();
+                        }}
                     >
                         <FontAwesomeIcon icon={faAngleLeft} size={20} color={'black'}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={{borderRadius: 200, overflow: 'hidden'}}>
                         <Image
-                            source={{uri: ownRoomData.image}}
+                            source={{uri: user_avatar}}
                             style={{width: 32, height: 32}}
                         />
                     </TouchableOpacity>
@@ -82,18 +94,24 @@ const PlaceDetail = ({route, navigation}) => {
                     </Text>
                 </View>
                 <ScrollView
-                    contentContainerStyle={{marginTop: 10, backgroundColor: 'gray', borderRadius: 20, overflow: 'hidden'}}
+                    contentContainerStyle={{
+                        marginTop: 10,
+                        backgroundColor: 'gray',
+                        borderRadius: 20,
+                        overflow: 'hidden'
+                    }}
                     horizontal={true}
                     showsHorizontalScrollIndicator={true}
                 >
-                    <Image
-                        style={{width: 300, height: 200, resizeMode: 'stretch', marginRight: 10}}
-                        source={{uri: image}}
-                    />
-                    <Image
-                        style={{width: 300, height: 200, resizeMode: 'stretch', marginRight: 10}}
-                        source={{uri: image}}
-                    />
+                    {imageByPlaceId?.map((image, index) => {
+                        return (
+                            <Image
+                                key={index}
+                                style={{width: 300, height: 200, resizeMode: 'stretch', marginRight: 10}}
+                                source={{uri: image.image}}
+                            />
+                        )
+                    })}
                 </ScrollView>
                 <View style={[styles.flex_row, {marginVertical: 10}]}>
                     <Text style={{color: activeColors.primary, fontSize: 20, fontWeight: 'bold'}}>{price}</Text>
@@ -118,18 +136,24 @@ const PlaceDetail = ({route, navigation}) => {
                         </View>
                     </View>
                     <View style={[styles.flex_row, {marginTop: 10}]}>
-                        <FontAwesomeIcon icon={faCircle}
-                                         color={(state === 'Available') ? activeColors.primary : '#E56C44'}/>
+                        <FontAwesomeIcon icon={faUser} color={activeColors.primary}/>
                         <View style={{flex: 1, paddingLeft: 10}}>
-                            <Text style={{fontSize: 16}}>{state}</Text>
-                            <Text>Owned By: Duc</Text>
+                            <Text style={{color: (state === 'Available') ? activeColors.primary : '#E56C44'}}
+                                  className="text-base font-bold"
+                            >{state}</Text>
+                            <Text>Owned By: {user_name}</Text>
                         </View>
                     </View>
                     <View style={[styles.flex_row, {marginTop: 10}]}>
                         <FontAwesomeIcon icon={faHome} color={activeColors.primary}/>
                         <View style={{flex: 1, paddingLeft: 10}}>
                             <Text style={{fontSize: 16}}>Type room: </Text>
-                            <Text style={{textTransform: 'capitalize'}}>{type_place}</Text>
+                            {categoryByPlaceId?.map((category, index) => {
+                                return (
+                                    <Text key={index}
+                                          style={{textTransform: 'capitalize'}}>{category.name}</Text>
+                                )
+                            })}
                         </View>
                     </View>
                 </View>
@@ -139,9 +163,14 @@ const PlaceDetail = ({route, navigation}) => {
                 </View>
             </ScrollView>
             <TouchableOpacity style={{paddingHorizontal: 20, paddingTop: 10}}>
-                <Text style={[styles.btn_book, {backgroundColor: activeColors.primary}]}>
-                    Book Now
-                </Text>
+                <TouchableOpacity
+                    onPress={() => {
+                        alert('booked')
+                    }}>
+                    <Text style={[styles.btn_book, {backgroundColor: activeColors.primary}]}>
+                        Book Now
+                    </Text>
+                </TouchableOpacity>
             </TouchableOpacity>
         </SafeAreaView>
     );
@@ -175,4 +204,4 @@ const styles = StyleSheet.create({
         borderRadius: 20
     }
 })
-export default PlaceDetail;
+export default PlaceDetailScreen;

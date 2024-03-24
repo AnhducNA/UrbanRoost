@@ -17,10 +17,9 @@ function PlaceCard(
         location,
         star,
         price,
-        type_place,
-        latitude,
-        longitude,
-        state
+        state,
+        user_name,
+        user_avatar
     }
 ) {
     // get router
@@ -42,10 +41,9 @@ function PlaceCard(
                     location,
                     star,
                     price,
-                    type_place,
-                    latitude,
-                    longitude,
-                    state
+                    state,
+                    user_name,
+                    user_avatar
                 });
             }}
         >
@@ -118,7 +116,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     wrapper: {
-        marginTop: 26,
+        marginBottom: 26,
         position: "relative",
         borderRadius: 4,
         overflow: "hidden",

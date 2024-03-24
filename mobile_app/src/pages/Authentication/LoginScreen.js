@@ -12,7 +12,7 @@ import {useNavigation} from "@react-navigation/native";
 import {isValidEmail} from "../../utils";
 import request from "../../api/request";
 
-const LoginPage = () => {
+const LoginScreen = () => {
     // navigation
     const navigation = useNavigation();
     // Data User
@@ -43,9 +43,14 @@ const LoginPage = () => {
     return (
         <SafeAreaView className={'w-full h-full bg-emerald-500'}>
             <View className={'px-5 mt-10 flex items-center justify-center'}>
-                <Text className={'text-4xl font-bold mb-10 text-yellow-300'}>
-                    Đăng nhập
-                </Text>
+                <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate('HomeTabs')
+                }}>
+                    <Text className={'text-4xl font-bold mb-10 text-yellow-300'}>
+                        Đăng nhập
+                    </Text>
+                </TouchableOpacity>
                 <TextInput
                     className={"w-full min-w-[300px] px-3 py-2 mb-5 bg-gray-200 text-base rounded"}
                     placeholderTextColor='gray'
@@ -96,4 +101,4 @@ const LoginPage = () => {
 // define styles
 const styles = StyleSheet.create({});
 
-export default LoginPage;
+export default LoginScreen;

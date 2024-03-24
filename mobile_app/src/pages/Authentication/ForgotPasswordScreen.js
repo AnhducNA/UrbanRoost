@@ -12,7 +12,7 @@ import {useNavigation} from "@react-navigation/native";
 import {isValidEmail} from "../../utils";
 import request from "../../api/request";
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordScreen = () => {
     // navigation
     const navigation = useNavigation();
     // Data User
@@ -68,4 +68,4 @@ const ForgotPasswordPage = () => {
 // define styles
 const styles = StyleSheet.create({});
 
-export default ForgotPasswordPage;
+export default ForgotPasswordScreen;

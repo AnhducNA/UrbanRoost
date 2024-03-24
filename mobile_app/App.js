@@ -1,7 +1,7 @@
 import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 import HomeTabs from "./src/pages/HomeTabs";
-import PlaceDetail from "./src/pages/Place/PlaceDetail";
+import PlaceDetailScreen from "./src/pages/Place/PlaceDetailScreen";
 import AdvancedSearch from "./src/pages/AdvancedSearchPage";
 import {Provider} from "react-redux";
 import {store} from "./src/store/store";
@@ -10,10 +10,10 @@ import {Appearance} from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import {getData, storeData} from "./src/config/asyncStorage";
 import {ThemeContext} from "./src/context/ThemeContext";
-import PlaceList from "./src/pages/Place/PlaceList";
-import LoginPage from "./src/pages/Authentication/LoginPage";
-import RegisterPage from "./src/pages/Authentication/RegisterPage";
-import ForgotPasswordPage from "./src/pages/Authentication/ForgotPasswordPage";
+import PlaceListScreen from "./src/pages/Place/PlaceListScreen";
+import LoginScreen from "./src/pages/Authentication/LoginScreen";
+import RegisterScreen from "./src/pages/Authentication/RegisterScreen";
+import ForgotPasswordScreen from "./src/pages/Authentication/ForgotPasswordScreen";
 
 const RootStack = createStackNavigator();
 //creating simple splash screen
@@ -75,16 +75,16 @@ export default function App() {
                     >
                         <RootStack.Group>
                             <RootStack.Screen name="HomeTabs" component={HomeTabs}/>
-                            <RootStack.Screen name="PlaceList" component={PlaceList}/>
-                            <RootStack.Screen name="PlaceDetail" component={PlaceDetail}/>
+                            <RootStack.Screen name="PlaceList" component={PlaceListScreen}/>
+                            <RootStack.Screen name="PlaceDetail" component={PlaceDetailScreen}/>
                         </RootStack.Group>
                         <RootStack.Group screenOptions={{presentation: 'modal'}}>
                             <RootStack.Screen name="AdvancedSearch" component={AdvancedSearch}/>
                         </RootStack.Group>
                         <RootStack.Group >
-                            <RootStack.Screen name="Login" component={LoginPage}/>
-                            <RootStack.Screen name="Register" component={RegisterPage}/>
-                            <RootStack.Screen name="ForgotPassword" component={ForgotPasswordPage}/>
+                            <RootStack.Screen name="Login" component={LoginScreen}/>
+                            <RootStack.Screen name="Register" component={RegisterScreen}/>
+                            <RootStack.Screen name="ForgotPassword" component={ForgotPasswordScreen}/>
                         </RootStack.Group>
                     </RootStack.Navigator>
                 </NavigationContainer>

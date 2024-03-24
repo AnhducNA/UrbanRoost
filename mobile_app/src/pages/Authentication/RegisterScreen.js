@@ -4,7 +4,7 @@ import {Button, SafeAreaView, Text, TextInput, ToastAndroid, TouchableOpacity, V
 import request from "../../api/request";
 import {isValidEmail} from "../../utils";
 
-const RegisterPage = () => {
+const RegisterScreen = () => {
     // navigation
     const navigation = useNavigation();
     // Data User
@@ -112,4 +112,4 @@ const RegisterPage = () => {
     );
 };
 
-export default RegisterPage;
+export default RegisterScreen;
