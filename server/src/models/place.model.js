@@ -84,6 +84,55 @@ class PlaceModel {
             );
         });
     };
+
+    static async newFavoritePlaceByUserId(placeId, userId) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                `INSERT INTO favorite_place_user (user_id, place_id) VALUES(?, ?)`,
+                [userId, placeId],
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        throw err;
+                    }
+                    resolve(response);
+                }
+            )
+        });
+    };
+
+    static async getFavoritePlaceByUserIdAndPlaceId(placeId, userId) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                `SELECT * FROM favorite_place_user WHERE place_id = ? AND user_id = ?`,
+                [placeId, userId],
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        throw err;
+                    }
+                    resolve(response);
+                }
+            )
+        });
+    };
+
+    static async deleteFavoritePlaceByUserIdAndPlaceId(placeId, userId) {
+        return new Promise((resolve, reject) => {
+            connection.query(
+                `DELETE FROM favorite_place_user WHERE place_id = ? AND user_id = ?`,
+                [placeId, userId],
+                (err, response) => {
+                    if (err) {
+                        reject(err);
+                        throw err;
+                    }
+                    resolve(response);
+                }
+            )
+        });
+    };
+
     static async getPlaceById(placeId) {
         return new Promise((resolve, reject) => {
             connection.query(
@@ -120,6 +169,7 @@ class PlaceModel {
             );
         });
     };
+
     static async getImageByPlaceId(placeId) {
         return new Promise((resolve, reject) => {
             connection.query(
@@ -137,6 +187,7 @@ class PlaceModel {
             );
         });
     };
+
     static async getCategoryByPlaceId(placeId) {
         return new Promise((resolve, reject) => {
             connection.query(

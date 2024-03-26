@@ -1,5 +1,5 @@
 const PlaceModel = require('../models/place.model');
-const formatDate = (date) =>  {
+const formatDate = (date) => {
     return (date) ? date.toLocaleDateString("vn-VN") : date
 };
 
@@ -108,10 +108,67 @@ module.exports = {
         const placeId = req.params.placeId;
         try {
             const categoryList = await PlaceModel.getCategoryByPlaceId(placeId);
-
             res.json({
                 data: categoryList
             });
+        } catch (err) {
+            res.status(500).json({message: err.message});
+        }
+    },
+    newFavoritePlaceByUserId: async (req, res) => {
+        const {placeId, userId} = req.body;
+        try {
+            if (!placeId || !userId) {
+                res.json({
+                    success: false,
+                    message: 'Địa điểm hoặc người dùng không tồn tại',
+                    data: {},
+                });
+            } else {
+                const favoritePlace = await PlaceModel.getFavoritePlaceByUserIdAndPlaceId(placeId, userId);
+                if (favoritePlace && favoritePlace.length > 0) {
+                    res.json({
+                        success: true,
+                        message: 'Địa điểm yêu thích đã có trong danh sách',
+                    });
+                } else {
+                    await PlaceModel.newFavoritePlaceByUserId(placeId, userId);
+                    res.json({
+                        success: true,
+                        message: 'Thêm địa điểm yêu thích thành công',
+                    });
+                }
+            }
+        } catch (err) {
+            res.status(500).json({message: err.message});
+        }
+    },
+    deleteFavoritePlaceByUserIdAndPlaceId: async (req, res) => {
+        const {placeId, userId} = req.query;
+        console.log(req.query)
+        try {
+            if (!placeId || !userId) {
+                res.json({
+                    success: false,
+                    message: 'Địa điểm hoặc người dùng không tồn tại',
+                    data: {},
+                });
+            } else {
+                const favoritePlace = await PlaceModel.getFavoritePlaceByUserIdAndPlaceId(placeId, userId);
+                if (favoritePlace && favoritePlace.length > 0) {
+                    await PlaceModel.deleteFavoritePlaceByUserIdAndPlaceId(placeId, userId);
+                    res.json({
+                        success: true,
+                        message: 'Xóa địa điểm yêu thích thành công',
+                    });
+                } else {
+                    await PlaceModel.newFavoritePlaceByUserId(placeId, userId);
+                    res.json({
+                        success: true,
+                        message: 'Địa điểm yêu thích không có trong danh sách',
+                    });
+                }
+            }
         } catch (err) {
             res.status(500).json({message: err.message});
         }
@@ -143,7 +200,7 @@ module.exports = {
             }
             if (image_list) {
                 await PlaceModel.deleteImageByPlaceId(insertId);
-                image_list.map(async image=> {
+                image_list.map(async image => {
                     await PlaceModel.newImage(image, insertId)
                 })
             }
@@ -185,7 +242,7 @@ module.exports = {
             }
             if (image_list) {
                 await PlaceModel.deleteImageByPlaceId(id);
-                image_list.map(async image=> {
+                image_list.map(async image => {
                     await PlaceModel.newImage(image, id)
                 })
             }
