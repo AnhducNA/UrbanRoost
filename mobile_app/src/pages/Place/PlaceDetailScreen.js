@@ -33,7 +33,8 @@ const PlaceDetailScreen = ({route, navigation}) => {
         price,
         state,
         user_name,
-        user_avatar
+        user_avatar,
+        is_favorite
     } = route.params;
     // Image by placeId
     const [imageByPlaceId, setImageByPlaceId] = useState([]);
@@ -47,36 +48,37 @@ const PlaceDetailScreen = ({route, navigation}) => {
     const [userLogin, setUserLogin] = useState();
     // favorite
     const [isFavorite, setIsFavorite] = useState(false);
-    const handleAddFavorite = async (placeId) => {
-        console.log(isFavorite)
-        if(isFavorite){
-        //     place is favorite
-
-        }
-        // await request.getCategoryByPlaceId(placeId)
-        //     .then((response) => {
-        //         setCategoryByPlaceId(response.data.data);
-        //     })
-        //     .catch(error => {
-        //         console.log('Error getPlaceList: ' + error.message);
-        //     });
-    };
-    // Check favorite for user and place
-    const getFavoritePlaceByUserid = async (userId) => {
-        if (userId) {
-            await request.getFavoritePlaceByUserid(userId)
+    const handleChangeFavorite = async () => {
+        if (!isFavorite) {
+            // place is not favorite
+            await request.newFavoritePlaceByUserId(
+                {'placeId': placeId, 'userId': userLogin}
+            )
                 .then((response) => {
-                    const favoritePlaceByUserid = (response.data.data);
-                    favoritePlaceByUserid?.map(placeItem => {
-                        if (placeItem.id === placeId) {
-                            setIsFavorite(true);
-                            return;
-                        }
-                    })
+                    if (response.data.success) {
+                        // Thêm địa điểm yêu thích thành công
+                        setIsFavorite(true);
+                    }
+                    alert(response.data.message);
                 })
                 .catch(error => {
-                    console.log('Error getFavoritePlaceByUserid: ' + error.message);
+                    console.log('Error newFavoritePlaceByUserId: ' + error.message);
+                });
+        } else {
+            // place is favorite => delete favorite
+            await request.deleteFavoritePlaceByUserIdAndPlaceId(
+                {'placeId': placeId, 'userId': userLogin}
+            )
+                .then((response) => {
+                    if (response.data.success) {
+                        // Xóa địa điểm yêu thích thành công
+                        setIsFavorite(false);
+                    }
+                    alert(response.data.message);
                 })
+                .catch(error => {
+                    console.log('Error newFavoritePlaceByUserId: ' + error.message);
+                });
         }
     };
     const getUserLogin = async () => {
@@ -116,12 +118,14 @@ const PlaceDetailScreen = ({route, navigation}) => {
             });
     };
     useEffect(() => {
+        if (is_favorite) {
+            setIsFavorite(true);
+        }
         getImageByPlaceId(placeId);
         getCategoryByPlaceId(placeId);
         getRateAboutPlaceId(placeId);
         getUserLogin();
-        getFavoritePlaceByUserid(userLogin);
-    }, [placeId]);
+    }, [userLogin, isFavorite]);
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView className={'px-3'}>
@@ -180,7 +184,7 @@ const PlaceDetailScreen = ({route, navigation}) => {
                         borderRadius: 5
                     }}>
                         <Text style={{color: '#fff', display: 'flex', alignItems: 'center', lineHeight: 30}}>
-                            {rateAverageAboutPlaceId} <FontAwesomeIcon icon={faStar} color={'#fff'} size={15}/>
+                            {rateAverageAboutPlaceId} <FontAwesomeIcon icon={faStar} color={'#fff'} size={14}/>
                         </Text>
                     </View>
                 </View>
@@ -258,7 +262,7 @@ const PlaceDetailScreen = ({route, navigation}) => {
             <View className={'py-3 flex items-center justify-center gap-3 flex-row'}>
                 <TouchableOpacity
                     className={'w-5/12'}
-                    onPress={handleAddFavorite}>
+                    onPress={handleChangeFavorite}>
                     <Text
                         className={'p-2 rounded-3xl bg-pink-600 text-white text-center text-base font-bold'}>
                         {(!!isFavorite) ? 'Xoá Yêu Thích' : 'Thêm Yêu Thích'}

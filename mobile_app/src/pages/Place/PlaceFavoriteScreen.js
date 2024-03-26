@@ -71,6 +71,7 @@ const PlaceListScreen = ({route}) => {
                                 state={placeItem.state}
                                 user_name={placeItem.user_name}
                                 user_avatar={placeItem.user_avatar}
+                                is_favorite={true}
                             />
                         )
                     })}

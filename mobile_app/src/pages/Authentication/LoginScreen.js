@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Button,
     SafeAreaView,
@@ -11,7 +11,7 @@ import {
 import {useNavigation} from "@react-navigation/native";
 import {isValidEmail} from "../../utils";
 import request from "../../api/request";
-import {storeData} from "../../config/asyncStorage";
+import {getData, storeData} from "../../config/asyncStorage";
 
 const LoginScreen = () => {
     // navigation
@@ -39,12 +39,23 @@ const LoginScreen = () => {
                 // login success
                 storeData('accessToken', response.data.accessToken);
                 storeData('accessUser', response.data.accessUser)
-                // navigation.navigate('HomeTabs');
+                navigation.navigate('HomeTabs');
             })
             .catch(error => {
                 console.log('Error Login' + error.message);
             })
     }
+    const checkUserLogin = async () => {
+        const accessToken = await getData('accessToken');
+        const accessUser = await getData('accessUser');
+
+        if (accessToken && accessUser) {
+            navigation.navigate('HomeTabs')
+        }
+    }
+    useEffect(() => {
+        checkUserLogin()
+    }, []);
     return (
         <SafeAreaView className={'w-full h-full bg-emerald-500'}>
             <View className={'px-5 mt-10 flex items-center justify-center'}>

@@ -34,6 +34,12 @@ const request = {
     getFavoritePlaceByUserid(userId) {
         return axiosClient.get(`/api/place/favorite/user/${userId}`);
     },
+    newFavoritePlaceByUserId(data) {
+        return axiosClient.post('api/place/favorite', data);
+    },
+    deleteFavoritePlaceByUserIdAndPlaceId({placeId, userId}) {
+        return axiosClient.delete(`api/place/favorite?placeId=${placeId}&userId=${userId}`);
+    },
     // category
     getCategoryList(limit, page) {
         return axiosClient.get(`/api/category/?limit=${limit}&page=${page}`);
@@ -42,7 +48,6 @@ const request = {
     getUserById(userId) {
         return axiosClient.get(`/api/user/${userId}`);
     },
-
 };
 
 export default request;

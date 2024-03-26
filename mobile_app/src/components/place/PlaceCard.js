@@ -17,6 +17,7 @@ function PlaceCard(
         state,
         user_name,
         user_avatar,
+        is_favorite,
     }
 ) {
     // get router
@@ -38,7 +39,8 @@ function PlaceCard(
                     price,
                     state,
                     user_name,
-                    user_avatar
+                    user_avatar,
+                    is_favorite
                 });
             }}
         >
